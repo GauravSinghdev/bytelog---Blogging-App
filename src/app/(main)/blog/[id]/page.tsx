@@ -2,16 +2,8 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-type BlogPageProps = {
-  params: Promise<{ id: string }>; // ← this is the mistake causing your error
-};
-
-export default async function BlogPage({
-  params,
-}: BlogPageProps) {
-  const { id } = await params;
-
-  const blog = await getBlogById(id);
+export default async function BlogPage({ params }: { params: { id: string } }) {
+  const blog = await getBlogById(params.id);
 
   if (!blog) {
     notFound();
@@ -22,9 +14,7 @@ export default async function BlogPage({
 
   const initials = (() => {
     const names = userName.split(" ");
-    return names.length >= 2
-      ? names[0][0] + names[1][0]
-      : names[0].slice(0, 2);
+    return names.length >= 2 ? names[0][0] + names[1][0] : names[0].slice(0, 2);
   })();
 
   return (
