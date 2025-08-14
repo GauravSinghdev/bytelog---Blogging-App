@@ -3,14 +3,14 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import Providers from "./provider";
 import { Toaster } from "react-hot-toast";
-
 import { Comic_Neue } from "next/font/google";
-export const comicNeue = Comic_Neue({
+
+// Define the font without exporting it
+const comicNeue = Comic_Neue({
   variable: "--font-comic-neue",
   subsets: ["latin"],
   weight: ["400"],
-});;
-
+});
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Your instant byte-sized blogging",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -36,15 +36,15 @@ export default async function RootLayout({
         >
           <Providers>{children}</Providers>
           <Toaster
-              position="bottom-right"
-              reverseOrder={false}
-              toastOptions={{
-                duration: 1500,
-                style: {
-                  padding: "10px",
-                },
-              }}
-            />
+            position="bottom-right"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 1500,
+              style: {
+                padding: "10px",
+              },
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>
