@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default async function BlogPage({ params }: { params: { id: string } }) {
-  const blog = await getBlogById(params.id);
+export default async function BlogPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const blog = await getBlogById(id);
 
   if (!blog) {
     notFound();
