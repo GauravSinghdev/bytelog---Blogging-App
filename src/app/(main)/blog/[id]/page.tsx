@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default async function BlogPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    const blog = await getBlogById(id);
+interface BlogPageProps {
+  params: { id: string } | Promise<{ id: string }>;
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const blog = await getBlogById(resolvedParams.id);
 
   if (!blog) {
-    notFound();
+    notFound(); // ✅ Proper App Router 404 handling
   }
 
   const userName = blog.user?.name ?? "Unknown";
@@ -15,7 +19,9 @@ export default async function BlogPage({ params }: { params: Promise<{ id: strin
 
   const initials = (() => {
     const names = userName.split(" ");
-    return names.length >= 2 ? names[0][0] + names[1][0] : names[0].slice(0, 2);
+    return names.length >= 2
+      ? names[0][0] + names[1][0]
+      : names[0].slice(0, 2);
   })();
 
   return (
