@@ -1,17 +1,20 @@
-import { notFound } from "next/navigation";
-import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getBlogById } from "@/lib/fetch-utils";
+import { notFound } from "next/navigation";
 
-export default async function BlogPage({
-    params,
-  }: {
-    params: { id: string };
-  }) {
-    const { id } = params;
+interface BlogPageProps {
+    params: {
+      id: string;
+    };
+  }
+  
+  export default async function BlogPage({ params }: BlogPageProps) {
+    const { id } = params; // ✅ no await here
+  
     const blog = await getBlogById(id);
   
     if (!blog) {
-      notFound();
+      return notFound();
     }
   
     const userName = blog.user?.name ?? "Unknown";
@@ -19,13 +22,15 @@ export default async function BlogPage({
   
     const initials = (() => {
       const names = userName.split(" ");
-      return names.length >= 2
-        ? names[0][0] + names[1][0]
-        : names[0].slice(0, 2);
+      if (names.length >= 2) {
+        return names[0][0] + names[1][0];
+      } else {
+        return names[0].slice(0, 2);
+      }
     })();
   
     return (
-      <main className="my-20 max-w-5xl mx-auto flex flex-col gap-5 ">
+      <main className="my-20 max-w-5xl mx-auto flex flex-col gap-5">
         <div className="flex flex-col gap-2 mt-20 lg:mt-40 border p-5 divide-y-2 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold">{blog.title}</h1>
