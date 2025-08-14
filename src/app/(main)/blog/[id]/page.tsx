@@ -2,12 +2,15 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+// Define the props interface with params as a Promise
 interface BlogPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function BlogPage({ params }: BlogPageProps) {
-  const blog = await getBlogById(params.id);
+  // Await the params to get the resolved id
+  const resolvedParams = await params;
+  const blog = await getBlogById(resolvedParams.id);
 
   if (!blog) {
     notFound(); // ✅ Proper App Router 404 handling
