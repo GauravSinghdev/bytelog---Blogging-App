@@ -35,6 +35,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal Server Error",
@@ -51,12 +52,12 @@ export async function POST(request: Request) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
-        return NextResponse.json(
-          {
-            message: "Not Authorized",
-          },
-          { status: 401 }
-        );
+      return NextResponse.json(
+        {
+          message: "Not Authorized",
+        },
+        { status: 401 }
+      );
     }
 
     const { title, content } = await request.json();
@@ -82,6 +83,7 @@ export async function POST(request: Request) {
       status: 201,
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal Server Error",

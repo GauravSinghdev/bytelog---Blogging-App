@@ -1,8 +1,7 @@
 "use client";
 
-import { BookOpen, Menu } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { UserBtn } from "./UserBtn";
 
