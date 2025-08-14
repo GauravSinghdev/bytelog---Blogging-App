@@ -1,4 +1,3 @@
-import React from 'react'
 import AddBlog from './AddBlog'
 
 export default function CreateBlogPage() {

@@ -1,11 +1,5 @@
-import { Comfortaa } from "next/font/google";
 import Appbar from "@/components/shared/Appbar";
 import Footer from "@/components/shared/Footer";
-
-const comfortaa = Comfortaa({
-  variable: "--font-comfortaa",
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,

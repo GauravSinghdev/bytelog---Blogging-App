@@ -1,8 +1,5 @@
 "use client";
 
-import * as React from "react";
-import { RiDashboard3Line } from "react-icons/ri";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, NotebookPen, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 import Link from "next/link";

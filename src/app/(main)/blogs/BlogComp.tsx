@@ -7,7 +7,7 @@ import {
   differenceInHours,
 } from "date-fns";
 import { Post } from "../../../../types/all-types";
-import { ArrowBigDownDash, ArrowBigRight } from "lucide-react";
+import { ArrowBigRight } from "lucide-react";
 
 interface BlogCompProps {
   blog: Post;
