@@ -47,8 +47,12 @@ export default function SignupForm() {
           });
           router.push("/login");
         }
-      } catch (err: any) {
-        setError(err.response?.data?.error || "Something went wrong.");
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.error || "Something went wrong.");
+        } else {
+          setError("Something went wrong.");
+        }
       }
     });
   };
