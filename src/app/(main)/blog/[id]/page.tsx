@@ -2,12 +2,14 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+type BlogPageProps = {
+  params: Promise<{ id: string }>; // ← this is the mistake causing your error
+};
+
 export default async function BlogPage({
   params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params; // ✅ no await
+}: BlogPageProps) {
+  const { id } = await params;
 
   const blog = await getBlogById(id);
 
