@@ -9,9 +9,9 @@ const getBlog = cache(async (blogId: string) => {
   return blog;
 });
 
-export default async function BlogPage(props: any) {
+export default async function BlogPage(props: unknown) {
 
-  const { blogId } = props.params as { blogId: string };
+  const { blogId } = (props as { params: { blogId: string } }).params;
 
   const blog = await getBlog(blogId);
 
