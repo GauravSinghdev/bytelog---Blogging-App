@@ -20,7 +20,7 @@ export default function Footer() {
             <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
               © {new Date().getFullYear()} ByteLog — Created with <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
-              <Link href={"https://codewithkara.com"} target="_blank" className="underline">codewithkara.com</Link>
+              <Link href={"https://codewithkara.com"} target="_blank" className="underline">codewithkara</Link>
             </span>
           </div>
 
