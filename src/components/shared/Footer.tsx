@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
+import { BookOpen, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
@@ -18,13 +18,14 @@ export default function Footer() {
           {/* Logo & Text */}
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            <span className="font-semibold text-slate-700 dark:text-slate-300">
-              © {new Date().getFullYear()} ByteLog — All rights reserved.
+            <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
+              © {new Date().getFullYear()} ByteLog — Created with <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
+              <Link href={"https://codewithkara.com"} target="_blank" className="underline">codewithkara.com</Link>
             </span>
           </div>
 
           {/* Links */}
-          <div className="flex gap-6">
+          {/* <div className="flex gap-6">
             {["Privacy Policy", "Terms of Service", "Contact"].map((item) => (
               <Link
                 key={item}
@@ -34,7 +35,7 @@ export default function Footer() {
                 {item}
               </Link>
             ))}
-          </div>
+          </div> */}
 
           {/* Mode Toggle */}
           <ModeToggle />

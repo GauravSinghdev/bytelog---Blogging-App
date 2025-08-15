@@ -128,8 +128,8 @@ export default function LoginForm() {
         </Button>
 
         <p className="text-center">
-          Not have an account?{" "}
-          <Link href={"/signup"} className="hover:underline text-blue-500">
+          Want to create an Account?{" "}
+          <Link href={"/signup"} className="hover:underline text-primary font-semibold">
             Signup
           </Link>
         </p>

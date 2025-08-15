@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User } from "lucide-react";
+import { LogOut, Notebook, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -45,7 +45,7 @@ export function DropdownMenuCheckboxes({ name, avatarUrl, id }: NameProp) {
         </Link>
         <Link href={`/create-blog`}>
           <DropdownMenuItem>
-            <User />
+            <Notebook />
             <span>Create Blog</span>
           </DropdownMenuItem>
         </Link>

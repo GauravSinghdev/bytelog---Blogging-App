@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, Variants } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Zap } from "lucide-react"
+import { motion, Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Github } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   const containerVariants: Variants = {
@@ -14,7 +15,7 @@ export default function HeroSection() {
         delayChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -26,7 +27,7 @@ export default function HeroSection() {
         ease: "easeOut",
       },
     },
-  }
+  };
 
   return (
     <motion.section
@@ -38,10 +39,17 @@ export default function HeroSection() {
       <div className="text-center">
         <motion.div
           variants={itemVariants}
-          className="inline-flex items-center px-4 py-2 bg-blue-50 border border-blue-200 rounded-full text-blue-700 text-sm font-medium mb-8"
+          className="inline-flex items-center bg-blue-50 border border-blue-200 rounded-full mb-8 text-black/70 font-bold hover:scale-110 duration-300"
         >
-          <Zap className="w-4 h-4 mr-2" />
-          Welcome to the future of blogging
+          <Link
+            href="https://github.com/GauravSinghdev/bytelog---Blogging-App"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center px-4 py-2"
+          >
+            <Github className="mr-2 h-5 w-5" />
+            Star it on GitHub
+          </Link>
         </motion.div>
 
         <motion.h1
@@ -91,19 +99,19 @@ export default function HeroSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2">10K+</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">10+</div>
             <div className="text-slate-600">Active Bloggers</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2">1M+</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">20+</div>
             <div className="text-slate-600">Articles Published</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2">50M+</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">10M+</div>
             <div className="text-slate-600">Monthly Readers</div>
           </div>
         </motion.div>
       </div>
     </motion.section>
-  )
+  );
 }
