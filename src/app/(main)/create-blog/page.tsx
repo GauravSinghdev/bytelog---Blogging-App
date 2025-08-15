@@ -1,5 +1,10 @@
 import redirectFn from '@/lib/redirectFn'
 import AddBlog from './AddBlog'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Create a blog"
+}
 
 export default async function CreateBlogPage() {
   await redirectFn();

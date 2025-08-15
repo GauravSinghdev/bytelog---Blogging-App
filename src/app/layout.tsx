@@ -15,9 +15,9 @@ const comicNeue = Comic_Neue({
 export const metadata: Metadata = {
   title: {
     default: "ByteLog",
-    template: "%s - ByteLog",
+    template: "%s | ByteLog",
   },
-  description: "Your instant byte-sized blogging",
+  description: "Blog and meme hub for programmers",
 };
 
 export default function RootLayout({

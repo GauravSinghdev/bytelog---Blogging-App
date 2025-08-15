@@ -2,12 +2,24 @@ import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cache } from "react";
+import { Metadata } from "next";
 
 const getBlog = cache(async (blogId: string) => {
   const blog = await getBlogById(blogId);
   if (!blog) notFound();
   return blog;
 });
+
+export async function generateMetadata(props: unknown
+): Promise<Metadata> {
+  const { blogId } = (props as { params: { blogId: string } }).params;
+  const blog = await getBlog(blogId);
+  return {
+    title: blog.title,
+    description: blog.content?.slice(0, 150) || "Programmers' blogging and meme app",
+  };
+}
+
 
 export default async function BlogPage(props: unknown) {
   

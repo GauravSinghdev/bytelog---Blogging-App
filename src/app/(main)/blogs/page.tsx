@@ -2,6 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import InfiniteBlogScroll from "./InfiniteBlogScroll";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "All blogs"
+}
+
 
 export default function AllBlogPage() {
   return (

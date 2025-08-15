@@ -1,6 +1,11 @@
 
 import React from "react";
 import SignupForm from "./SignupForm";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Signup"
+}
 
 
 export default function SignupPage() {
