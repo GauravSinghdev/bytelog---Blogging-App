@@ -26,16 +26,13 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
   
     return response.json();
   }
-
-  import type { Prisma } from "@prisma/client";
-  import { prisma } from "./prisma";
   
-  export async function getBlogById(id: string): Promise<
-    Prisma.PostGetPayload<{ include: { user: true } }> | null
-  > {
+  export async function getBlogById(id: string) {
     return prisma.post.findUnique({
       where: { id },
-      include: { user: true },
+      include: {
+        user: true,
+      },
     });
   }
   
