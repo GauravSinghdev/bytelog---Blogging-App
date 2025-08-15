@@ -1,26 +1,32 @@
 import { notFound } from "next/navigation";
 import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cache } from "react";
 
-type BlogPageProps = {
-  params: { id: string };
-};
+interface PageProps {
+  params: { postId: string };
+}
 
-export default async function BlogPage({ params }: BlogPageProps) {
-  const { id } = params;
+// Cache the blog fetch
+const getBlog = cache(async (postId: string) => {
+  const blog = await getBlogById(postId);
+  if (!blog) notFound();
+  return blog;
+});
 
-  const blog = await getBlogById(id);
+export default async function BlogPage({ params }: PageProps) {
+  const { postId } = params; // ✅ Correct key name
 
-  if (!blog) {
-    notFound();
-  }
+  const blog = await getBlog(postId);
 
   const userName = blog.user?.name ?? "Unknown";
   const avatarUrl = blog.user?.avatarUrl ?? undefined;
 
   const initials = (() => {
-    const names = userName.split(" ");
-    return names.length >= 2 ? names[0][0] + names[1][0] : names[0].slice(0, 2);
+    const names = userName.trim().split(/\s+/);
+    return names.length >= 2
+      ? names[0][0] + names[1][0]
+      : names[0].slice(0, 2);
   })();
 
   return (
