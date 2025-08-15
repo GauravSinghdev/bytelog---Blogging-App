@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cache } from "react";
 
 interface PageProps {
-  params: { postId: string };
+  params: { blogId: string };
 }
 
 const getBlog = cache(async (blogId: string) => {
@@ -13,10 +13,9 @@ const getBlog = cache(async (blogId: string) => {
   return blog;
 });
 
-export default async function BlogPage({ params }: PageProps) {
-  const { postId } = params;
+export default async function BlogPage({ params: { blogId } }: PageProps) {
 
-  const blog = await getBlog(postId);
+  const blog = await getBlog(blogId);
 
   const userName = blog.user?.name ?? "Unknown";
   const avatarUrl = blog.user?.avatarUrl ?? undefined;
