@@ -10,9 +10,8 @@ const getBlog = cache(async (blogId: string) => {
 });
 
 export default async function BlogPage(props: unknown) {
-
+  
   const { blogId } = (props as { params: { blogId: string } }).params;
-
   const blog = await getBlog(blogId);
 
   const userName = blog.user?.name ?? "Unknown";
@@ -20,9 +19,7 @@ export default async function BlogPage(props: unknown) {
 
   const initials = (() => {
     const names = userName.trim().split(/\s+/);
-    return names.length >= 2
-      ? names[0][0] + names[1][0]
-      : names[0].slice(0, 2);
+    return names.length >= 2 ? names[0][0] + names[1][0] : names[0].slice(0, 2);
   })();
 
   return (

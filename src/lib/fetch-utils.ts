@@ -27,15 +27,17 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
     return response.json();
   }
 
-  export async function getBlogById(id: string) {
+  import type { Prisma } from "@prisma/client";
+  import { prisma } from "./prisma";
+  
+  export async function getBlogById(id: string): Promise<
+    Prisma.PostGetPayload<{ include: { user: true } }> | null
+  > {
     return prisma.post.findUnique({
       where: { id },
-      include: {
-        user: {
-          select: { id: true, name: true, avatarUrl: true },
-        },
-      },
+      include: { user: true },
     });
   }
+  
   
   
