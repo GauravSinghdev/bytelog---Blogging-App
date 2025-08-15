@@ -3,17 +3,15 @@ import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cache } from "react";
 
-interface PageProps {
-  params: { blogId: string };
-}
-
 const getBlog = cache(async (blogId: string) => {
   const blog = await getBlogById(blogId);
   if (!blog) notFound();
   return blog;
 });
 
-export default async function BlogPage({ params: { blogId } }: PageProps) {
+export default async function BlogPage(props: any) {
+
+  const { blogId } = props.params as { blogId: string };
 
   const blog = await getBlog(blogId);
 
