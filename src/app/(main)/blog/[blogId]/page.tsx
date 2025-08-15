@@ -7,9 +7,8 @@ interface PageProps {
   params: { postId: string };
 }
 
-// ✅ Cache wrapper around your getBlogById function
-const getBlog = cache(async (postId: string) => {
-  const blog = await getBlogById(postId);
+const getBlog = cache(async (blogId: string) => {
+  const blog = await getBlogById(blogId);
   if (!blog) notFound();
   return blog;
 });
