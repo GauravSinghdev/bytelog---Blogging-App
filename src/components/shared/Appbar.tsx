@@ -34,7 +34,7 @@ export default function Appbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="flex items-center gap-4 sm:gap-8">
           {navArr.map((item) => (
             <Link
               key={item.name}

@@ -23,10 +23,10 @@ export default async function BlogPage(props: unknown) {
   })();
 
   return (
-    <main className="my-20 max-w-5xl mx-auto flex flex-col gap-5">
-      <div className="flex flex-col gap-2 mt-20 lg:mt-40 border p-5 divide-y-2 backdrop-blur-sm">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">{blog.title}</h1>
+    <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen items-center justify-center">
+      <div className="flex flex-col gap-2 p-3 md:p-5 backdrop-blur-sm">
+        <div className="flex items-center justify-end">
+          
           <div className="flex items-center gap-3 text-gray-600">
             <Avatar className="w-10 h-10 border-2">
               {avatarUrl ? (
@@ -43,7 +43,11 @@ export default async function BlogPage(props: unknown) {
             </div>
           </div>
         </div>
+        <div className="divide-y-2 ">
+        <h1 className="text-3xl font-bold">{blog.title}</h1>
         <div className="mt-4">{blog.content}</div>
+        </div>
+        
       </div>
     </main>
   );

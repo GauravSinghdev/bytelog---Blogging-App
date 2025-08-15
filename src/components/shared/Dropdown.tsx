@@ -37,10 +37,16 @@ export function DropdownMenuCheckboxes({ name, avatarUrl, id }: NameProp) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <Link href={`profile/${id}`}>
+        <Link href={`/profile/${id}`}>
           <DropdownMenuItem>
             <User />
             <span>Profile</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href={`/create-blog`}>
+          <DropdownMenuItem>
+            <User />
+            <span>Create Blog</span>
           </DropdownMenuItem>
         </Link>
         {/* <Link href={`blogs/${id}`}>

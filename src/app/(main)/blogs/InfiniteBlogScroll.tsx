@@ -22,10 +22,7 @@ export default function InfiniteBlogScroll() {
 
   if (isPending) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 px-5 lg:px-0">
-        <BlogSkeleton />
-        <BlogSkeleton />
-        <BlogSkeleton />
+      <div className="grid grid-cols-1 gap-4 px-5 lg:px-0">
         <BlogSkeleton />
         <BlogSkeleton />
         <BlogSkeleton />
@@ -48,14 +45,14 @@ export default function InfiniteBlogScroll() {
       {blogsArr && blogsArr.length > 0 && (
         <InfiniteScrollContainer
           onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 px-5 lg:px-0"
+          className="masonry px-5 lg:px-0"
         >
-          {blogsArr.map((blog, indx) => (
-            <BlogComp blog={blog} key={indx} />
+          {blogsArr.map((blog) => (
+            <BlogComp key={blog.id} blog={blog}  />
           ))}
           {isFetchingNextPage && (
-            <div className="flex justify-center col-span-2 my-4">
-              <Loader2 className="animate-spin" />
+            <div className="flex justify-center col-span-2">
+              <Loader2 className="animate-spin text-primary" />
             </div>
           )}
         </InfiniteScrollContainer>
