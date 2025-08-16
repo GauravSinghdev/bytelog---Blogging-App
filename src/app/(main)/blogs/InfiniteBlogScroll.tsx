@@ -6,7 +6,11 @@ import BlogComp from "./BlogComp";
 import { useBlogQuery } from "../create-blog/useCreateBlogComp";
 import { BlogSkeleton } from "./BlogSkeleton";
 
-export default function InfiniteBlogScroll() {
+interface InfiniteBlogScrollProps {
+  query: string; // <-- pass search query
+}
+
+export default function InfiniteBlogScroll({ query }: InfiniteBlogScrollProps) {
   const {
     data,
     isPending,
@@ -16,39 +20,35 @@ export default function InfiniteBlogScroll() {
     isLoading,
     isFetching,
     isFetchingNextPage,
-  } = useBlogQuery();
+  } = useBlogQuery(query); // <-- use query in hook
 
-  const blogsArr = data?.pages.flatMap((page) => page.posts);
+  const blogsArr = data?.pages.flatMap((page) => page.posts) ?? [];
 
   if (isPending) {
     return (
       <div className="grid grid-cols-1 gap-4 px-5 lg:px-0">
-        <BlogSkeleton />
-        <BlogSkeleton />
-        <BlogSkeleton />
-        <BlogSkeleton />
-        <BlogSkeleton />
+        {Array.from({ length: 5 }).map((_, i) => (
+          <BlogSkeleton key={i} />
+        ))}
       </div>
     );
   }
 
   return (
     <div>
-      {isError && (
-        <div className="mb-4 text-red-500">Error loading blogs</div>
+      {isError && <div className="mb-4 text-red-500">Error loading blogs</div>}
+
+      {!isLoading && !isError && blogsArr.length === 0 && (
+        <div className="mb-4">No blogs found.</div>
       )}
 
-      {!isLoading && !isError && blogsArr?.length === 0 && (
-        <div className="mb-4">No blogs yet.</div>
-      )}
-
-      {blogsArr && blogsArr.length > 0 && (
+      {blogsArr.length > 0 && (
         <InfiniteScrollContainer
           onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
           className="masonry px-5 lg:px-0"
         >
           {blogsArr.map((blog) => (
-            <BlogComp key={blog.id} blog={blog}  />
+            <BlogComp key={blog.id} blog={blog} />
           ))}
           {isFetchingNextPage && (
             <div className="flex justify-center col-span-2">

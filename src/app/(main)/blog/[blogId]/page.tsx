@@ -39,7 +39,7 @@ export default async function BlogPage(props: unknown) {
       <div className="flex flex-col gap-2 p-3 md:p-5 backdrop-blur-sm">
         <div className="flex items-center justify-end">
           
-          <div className="flex items-center gap-3 text-gray-600">
+          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
             <Avatar className="w-10 h-10 border-2">
               {avatarUrl ? (
                 <AvatarImage src={avatarUrl} alt={userName} />

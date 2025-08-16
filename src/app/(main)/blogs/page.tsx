@@ -1,25 +1,25 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import InfiniteBlogScroll from "./InfiniteBlogScroll";
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "All blogs"
-}
-
+import SearchComp from "./SearchComp";
 
 export default function AllBlogPage() {
+  const [query, setQuery] = useState("");
+
   return (
     <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen">
-      <div className="flex justify-start mt-24">
+      <div className="flex items-center justify-end mt-24 mx-1 mb-2 gap-2">
+        <SearchComp query={query} setQuery={setQuery} />
         <Link href={"/create-blog"}>
-          <Button className="w-fit ml-2 md:mr-0 font-semibold">
-            Create new Blog
+          <Button className="w-fit mr-3 md:mr-0 font-semibold">
+            Create <span className="hidden md:inline">new Blog</span> 
           </Button>
         </Link>
       </div>
-      <InfiniteBlogScroll />
+      <InfiniteBlogScroll query={query} />
     </main>
   );
 }

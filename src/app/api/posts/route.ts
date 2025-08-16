@@ -8,9 +8,23 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const cursorParam = url.searchParams.get("cursor");
     const cursor = cursorParam || undefined;
+    const q = url.searchParams.get("q") || "";
     const pageSize = 10;
 
+    // Split query into words
+    const searchWords = q.split(" ").filter(Boolean);
+
     const posts = await prisma.post.findMany({
+      where: searchWords.length
+        ? {
+            AND: searchWords.map((word) => ({
+              OR: [
+                { title: { contains: word, mode: "insensitive" } },
+                { content: { contains: word, mode: "insensitive" } },
+              ],
+            })),
+          }
+        : undefined, // Prisma likes `undefined` instead of {}
       include: {
         user: {
           select: {
@@ -28,24 +42,19 @@ export async function GET(request: Request) {
 
     const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
 
-    const data = {
+    return NextResponse.json({
       posts: posts.slice(0, pageSize),
       nextCursor,
-    };
-
-    return NextResponse.json(data);
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching posts:", error);
     return NextResponse.json(
-      {
-        message: "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
+      { message: "Internal Server Error" },
+      { status: 500 }
     );
   }
 }
+
 
 export async function POST(request: Request) {
   try {
@@ -53,9 +62,7 @@ export async function POST(request: Request) {
 
     if (!session?.user) {
       return NextResponse.json(
-        {
-          message: "Not Authorized",
-        },
+        { message: "Not Authorized" },
         { status: 401 }
       );
     }
@@ -64,9 +71,7 @@ export async function POST(request: Request) {
 
     if (!title || !content) {
       return NextResponse.json(
-        {
-          message: "Title or Content missing!",
-        },
+        { message: "Title or Content missing!" },
         { status: 400 }
       );
     }
@@ -79,18 +84,12 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(newPost, {
-      status: 201,
-    });
+    return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      {
-        message: "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
+      { message: "Internal Server Error" },
+      { status: 500 }
     );
   }
 }

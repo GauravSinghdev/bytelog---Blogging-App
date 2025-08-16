@@ -11,12 +11,12 @@ import { Session } from "next-auth";
 
 const queryKey: QueryKey = ["post"];
 
-export function useBlogQuery() {
+export function useBlogQuery(query: string) {
   return useInfiniteQuery<PostResponse>({
-    queryKey,
+    queryKey: ["blogs", query], // include query in cache key
     queryFn: ({ pageParam }) =>
       fetchData<PostResponse>(
-        `/api/posts?${pageParam ? `cursor=${pageParam}` : ""}`
+        `/api/posts?${pageParam ? `cursor=${pageParam}&` : ""}q=${encodeURIComponent(query)}`
       ),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
