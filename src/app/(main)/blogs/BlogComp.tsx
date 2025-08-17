@@ -24,7 +24,7 @@ export default function BlogComp({ blog }: BlogCompProps) {
   const diffHours = differenceInHours(now, createdAt);
 
   if (diffSeconds < 60) {
-    timeDisplay = `${diffSeconds} sec ago`;
+    timeDisplay = `Just now`;
   } else if (diffMinutes < 60) {
     timeDisplay = `${diffMinutes} min ago`;
   } else if (diffHours < 24) {
