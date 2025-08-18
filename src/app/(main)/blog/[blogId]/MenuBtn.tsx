@@ -41,7 +41,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
       </button>
 
       <div
-        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2  ${session?.data?.user?.id != userId ? "-top-10 right-0": "-top-20 right-0"}
+        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2 text-sm md:text-base  ${session?.data?.user?.id != userId ? "-top-10 right-0": "-top-20 right-0"}
         transition-opacity duration-500 ${
           openMenu ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
@@ -50,7 +50,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
           className="w-full hover:bg-transparent cursor-pointer flex items-center justify-center gap-1 py-1 hover:opacity-80 hover:text-green-400"
           onClick={handleCopy}
         >
-          Copy Link
+          Copy <span className="hidden md:inline">Link</span>
           <Copy className="size-4" />
         </button>
         {session?.data?.user?.id === userId && (

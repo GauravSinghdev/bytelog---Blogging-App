@@ -42,7 +42,7 @@ export function AlertDlt({ currentBlogId }: AlertDltProps) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <button className="w-full hover:bg-transparent cursor-pointer flex items-center justify-center gap-1 py-1 hover:opacity-80 hover:text-red-400">
-          Delete Blog
+          Delete <span className="hidden md:inline">Blog</span>
           <Trash className="size-4" />
         </button>
       </AlertDialogTrigger>

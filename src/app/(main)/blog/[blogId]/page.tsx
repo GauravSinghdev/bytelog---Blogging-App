@@ -34,7 +34,7 @@ export default async function BlogPage(props: unknown) {
   })();
 
   return (
-    <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen items-center justify-center">
+    <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen items-center mt-40">
       <div className="flex flex-col w-full gap-2 p-3 md:p-5 backdrop-blur-sm">
         <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
           <Avatar className="w-10 h-10 border-2">
