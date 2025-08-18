@@ -36,5 +36,20 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
     });
   }
   
+  export async function deleteBlog<T>(url: string, blogId: string): Promise<T> {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ blogId }),
+    });
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+  
+    return response.json();
+  }
   
   

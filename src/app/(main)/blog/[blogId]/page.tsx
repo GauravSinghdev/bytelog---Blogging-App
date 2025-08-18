@@ -3,6 +3,7 @@ import { getBlogById } from "@/lib/fetch-utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cache } from "react";
 import { Metadata } from "next";
+import MenuBtn from "./MenuBtn";
 
 const getBlog = cache(async (blogId: string) => {
   const blog = await getBlogById(blogId);
@@ -10,19 +11,17 @@ const getBlog = cache(async (blogId: string) => {
   return blog;
 });
 
-export async function generateMetadata(props: unknown
-): Promise<Metadata> {
+export async function generateMetadata(props: unknown): Promise<Metadata> {
   const { blogId } = (props as { params: { blogId: string } }).params;
   const blog = await getBlog(blogId);
   return {
     title: blog.title,
-    description: blog.content?.slice(0, 150) || "Programmers' blogging and meme app",
+    description:
+      blog.content?.slice(0, 150) || "Programmers' blogging and meme app",
   };
 }
 
-
 export default async function BlogPage(props: unknown) {
-  
   const { blogId } = (props as { params: { blogId: string } }).params;
   const blog = await getBlog(blogId);
 
@@ -36,30 +35,29 @@ export default async function BlogPage(props: unknown) {
 
   return (
     <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen items-center justify-center">
-      <div className="flex flex-col gap-2 p-3 md:p-5 backdrop-blur-sm">
-        <div className="flex items-center justify-end">
-          
-          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
-            <Avatar className="w-10 h-10 border-2">
-              {avatarUrl ? (
-                <AvatarImage src={avatarUrl} alt={userName} />
-              ) : (
-                <AvatarFallback>{initials}</AvatarFallback>
-              )}
-            </Avatar>
-            <div className="divide-y">
-              <p className="font-medium">{userName}</p>
-              <p className="text-sm italic">
-                {new Date(blog.createdAt).toLocaleDateString()}
-              </p>
-            </div>
+      <div className="flex flex-col w-full gap-2 p-3 md:p-5 backdrop-blur-sm">
+        <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
+          <Avatar className="w-10 h-10 border-2">
+            {avatarUrl ? (
+              <AvatarImage src={avatarUrl} alt={userName} />
+            ) : (
+              <AvatarFallback>{initials}</AvatarFallback>
+            )}
+          </Avatar>
+          <div className="divide-y">
+            <p className="font-medium">{userName}</p>
+            <p className="text-sm italic">
+              {new Date(blog.createdAt).toLocaleDateString()}
+            </p>
           </div>
         </div>
         <div className="divide-y-2 ">
-        <h1 className="text-3xl font-bold">{blog.title}</h1>
-        <div className="mt-4">{blog.content}</div>
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-bold">{blog.title}</h1>
+            <MenuBtn blogId={blogId} userId={blog?.userId} />
+          </div>
+          <div className="mt-4">{blog.content}</div>
         </div>
-        
       </div>
     </main>
   );
