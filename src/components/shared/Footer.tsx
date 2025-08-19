@@ -1,9 +1,11 @@
 "use client";
 
-import { BookOpen, Heart } from "lucide-react";
+import logo from "../../../public/logo.png"
+import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -14,13 +16,27 @@ export default function Footer() {
         transition={{ duration: 0.6 }}
         className="relative bottom-0 left-0 right-0 z-50 max-w-7xl mx-auto py-3"
       >
-        <div className="flex flex-col md:flex-row justify-between items-center gap-5">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-5 max-w-6xl mx-auto">
           {/* Logo & Text */}
           <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            <Image
+              src={logo}
+              alt="logo"
+              width={20}
+              height={20}
+              className="size-6"
+              priority
+            />
             <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
-              © {new Date().getFullYear()} ByteLog — Created with <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
-              <Link href={"https://codewithkara.com"} target="_blank" className="underline">codewithkara</Link>
+              © {new Date().getFullYear()} ByteLog — Created with{" "}
+              <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
+              <Link
+                href={"https://codewithkara.com"}
+                target="_blank"
+                className="underline"
+              >
+                codewithkara
+              </Link>
             </span>
           </div>
 

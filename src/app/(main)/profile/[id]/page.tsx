@@ -37,8 +37,8 @@ export default async function ProfilePage(props: unknown) {
   })();
 
   return (
-    <main className="mt-24 max-w-5xl mx-auto flex flex-col gap-5 backdrop-blur">
-      <div className="flex border relative">
+    <main className="mt-24 max-w-5xl mx-auto flex flex-col gap-5">
+      <div className="flex border relative backdrop-blur">
         <Avatar className="cursor-pointer shadow p-0.5 size-24 lg:size-28 text-2xl">
           {avatarUrl ? (
             <AvatarImage src={avatarUrl} alt={avatarUrl} />
