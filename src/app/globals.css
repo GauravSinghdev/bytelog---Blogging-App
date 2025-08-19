@@ -112,7 +112,6 @@
   --sidebar-ring: oklch(0.541 0.281 293.009);
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -121,22 +120,20 @@
   body {
     font-family: var(--font-comic-neue);
     @apply bg-background text-foreground;
-    
   }
 }
-
 
 /* Custom grid background */
 .bg-grid-slate-200\/60 {
   background-image: linear-gradient(
       to right,
       rgb(226 232 240 / 0.6) 1px,
-      transparent 1px
+      transparent 2px
     ),
     linear-gradient(
       to bottom,
       rgb(226 232 240 / 0.6) 1px,
-      transparent 1px
+      transparent 2px
     );
   background-size: 40px 40px;
 }

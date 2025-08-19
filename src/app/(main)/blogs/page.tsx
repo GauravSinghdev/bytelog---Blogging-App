@@ -11,7 +11,7 @@ export default function AllBlogPage() {
 
   return (
     <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen">
-      <div className="flex items-center justify-end mt-24 mx-1 mb-2 gap-2">
+      <div className="flex items-center justify-end mt-10 mx-1 gap-2">
         <SearchComp query={query} setQuery={setQuery} />
         <Link href={"/create-blog"}>
           <Button className="w-fit mr-3 md:mr-0 font-semibold">

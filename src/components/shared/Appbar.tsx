@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "../../../public/logo.png"
+import logo from "../../../public/logo.png";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { UserBtn } from "./UserBtn";
@@ -26,12 +26,21 @@ export default function Appbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed left-0 right-0 z-50 max-w-6xl mx-auto p-2 mt-2 w-full"
-    >
-      <div className=" bg-white/60 dark:bg-slate-900/30 border-2 border-white/20 dark:border-slate-700/40 rounded-xl px-6 py-3 shadow flex justify-between items-center gap-5">
+      style={{ scrollbarGutter: "stable" }} // 👈 fixes layout shift
+      className="relative max-w-6xl mx-auto my-2"
+      >
+      <div className="bg-white/60 dark:bg-slate-900/30 border-2 border-white/20 dark:border-slate-700/40 rounded-xl px-6 py-3 shadow flex justify-between items-center gap-5">
+
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src={logo} alt="logo" width={20} height={20} className="h-8 w-8" priority/>
+          <Image
+            src={logo}
+            alt="logo"
+            width={20}
+            height={20}
+            className="h-8 w-8"
+            priority
+          />
           <span className="hidden md:block text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
             ByteLog
           </span>

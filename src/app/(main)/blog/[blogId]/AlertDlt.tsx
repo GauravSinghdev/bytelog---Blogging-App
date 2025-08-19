@@ -30,7 +30,7 @@ export function AlertDlt({ currentBlogId }: AlertDltProps) {
         toast.success("Blog deleted successfully");
         setTimeout(() => {
           router.push("/blogs"); 
-        }, 500);
+        }, 100);
       }
     } catch (error) {
       console.error(error);

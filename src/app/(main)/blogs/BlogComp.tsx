@@ -78,8 +78,8 @@ export default function BlogComp({ blog }: BlogCompProps) {
       </div>
 
       <div className="flex flex-col w-full">
-        <h1 className="text-2xl font-semibold line-clamp-2">{blog.title}</h1>
-        <p className="text-lg line-clamp-2">{blog.content}</p>
+        <h1 className="text-2xl font-semibold line-clamp-2 opacity-80">{blog.title}</h1>
+        <p className="text-lg line-clamp-2 opacity-80">{blog.content}</p>
       </div>
     </div>
   );

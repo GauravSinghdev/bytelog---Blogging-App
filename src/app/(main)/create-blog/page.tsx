@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function CreateBlogPage() {
   await redirectFn();
   return (
-    <main className="mt-20 max-w-6xl mx-auto min-h-screen flex flex-col gap-5">
+    <main className="mt-10 max-w-6xl mx-auto min-h-screen flex flex-col gap-5">
         <AddBlog/>
     </main>
   )

@@ -10,6 +10,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import LoadingBtn from "@/components/shared/LoadingBtn";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -38,7 +39,10 @@ export default function LoginForm() {
       });
 
       if (res?.ok) {
-        router.push("/blogs?success=true");
+        toast.success("Logged in successfully.");
+        setTimeout(() => {
+          router.push("/blogs");
+        }, 100)
       }
 
       if (res?.error) {

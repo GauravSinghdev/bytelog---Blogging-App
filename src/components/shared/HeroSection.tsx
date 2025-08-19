@@ -100,7 +100,7 @@ export default function HeroSection() {
         {/* Stats */}
         <motion.div
           variants={itemVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+          className="grid grid-cols-3 gap-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
             <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">

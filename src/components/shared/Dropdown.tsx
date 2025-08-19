@@ -33,7 +33,7 @@ export function DropdownMenuCheckboxes({ name, avatarUrl, id }: NameProp) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-fit p-2 border-2 cursor-pointer">
         <DropdownMenuLabel>
-          Logged in as <span className="text-primary">@{name}</span>
+          Logged in as <span className="text-primary font-bold">@{name}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
