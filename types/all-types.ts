@@ -1,6 +1,7 @@
 export type Post = {
-  id: number;
+  id: string;
   user: {
+    id: string;
     name: string;
     avatarUrl?: string | null;
   };

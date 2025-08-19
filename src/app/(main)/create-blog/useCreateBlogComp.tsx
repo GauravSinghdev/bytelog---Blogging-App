@@ -1,4 +1,4 @@
-import { fetchData, postData } from "@/lib/fetch-utils";
+import { fetchData, fetchMyData, postData } from "@/lib/fetch-utils";
 import {
   InfiniteData,
   QueryKey,
@@ -9,11 +9,11 @@ import {
 import { Post, PostResponse } from "../../../../types/all-types";
 import { Session } from "next-auth";
 
-const queryKey: QueryKey = ["post"];
+const queryKey: QueryKey = ["blog"];
 
 export function useBlogQuery(query: string) {
   return useInfiniteQuery<PostResponse>({
-    queryKey: ["blogs", query], // include query in cache key
+    queryKey: ["blog", query], // include query in cache key
     queryFn: ({ pageParam }) =>
       fetchData<PostResponse>(
         `/api/posts?${pageParam ? `cursor=${pageParam}&` : ""}q=${encodeURIComponent(query)}`
@@ -22,6 +22,19 @@ export function useBlogQuery(query: string) {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 }
+
+export function useMyBlogQuery(userId: string) {
+  return useInfiniteQuery<PostResponse>({
+    queryKey: ["myblog", userId],
+    queryFn: ({ pageParam }) =>
+      fetchMyData<PostResponse>(
+        `/api/my-posts?userId=${userId}${pageParam ? `&cursor=${pageParam}` : ""}`
+      ),
+    initialPageParam: undefined as number | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+}
+
 
 export function useCreateBlogComp({ session }: { session: Session | null }) {
   console.log(session);
@@ -44,10 +57,11 @@ export function useCreateBlogComp({ session }: { session: Session | null }) {
         >(queryKey);
 
       const optimisticBlog: Post = {
-        id: Date.now(),
+        id: Date.now().toString(),
         title: newBlogData.title,
         content: newBlogData.content,
         user: {
+          id: session?.user?.id || "Anonymous_Id",
           name: session?.user?.name || "Anonymous",
           avatarUrl: session?.user?.image || "",
         },

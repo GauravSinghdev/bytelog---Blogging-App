@@ -10,6 +10,16 @@ export async function fetchData<T>(url: string): Promise<T> {
     return response.json();
   }
 
+  export async function fetchMyData<T>(url: string): Promise<T> {
+    const response = await fetch(url);
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+  
+    return response.json();
+  }
+
 
 export async function postData<T>(url: string, data: unknown): Promise<T> {
     const response = await fetch(url, {
@@ -52,4 +62,14 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
     return response.json();
   }
   
+  export async function getProfileById(id: string) {
+    return prisma.user.findUnique({
+      where: { id },
+      include: {
+        _count: {
+          select: { posts: true },
+        },
+      },
+    });
+  }
   

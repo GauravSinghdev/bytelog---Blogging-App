@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cache } from "react";
 import { Metadata } from "next";
 import MenuBtn from "./MenuBtn";
+import Link from "next/link";
 
 const getBlog = cache(async (blogId: string) => {
   const blog = await getBlogById(blogId);
@@ -12,7 +13,7 @@ const getBlog = cache(async (blogId: string) => {
 });
 
 export async function generateMetadata(props: unknown): Promise<Metadata> {
-  const { blogId } = (props as { params: { blogId: string } }).params;
+  const { blogId } = await (props as { params: { blogId: string } }).params;
   const blog = await getBlog(blogId);
   return {
     title: blog.title,
@@ -22,7 +23,7 @@ export async function generateMetadata(props: unknown): Promise<Metadata> {
 }
 
 export default async function BlogPage(props: unknown) {
-  const { blogId } = (props as { params: { blogId: string } }).params;
+  const { blogId } = await (props as { params: { blogId: string } }).params;
   const blog = await getBlog(blogId);
 
   const userName = blog.user?.name ?? "Unknown";
@@ -45,7 +46,7 @@ export default async function BlogPage(props: unknown) {
             )}
           </Avatar>
           <div className="divide-y">
-            <p className="font-medium">{userName}</p>
+            <Link href={`/profile/${blog?.user?.id}`} className="hover:underline"><p className="font-medium">{userName}</p></Link>
             <p className="text-sm italic">
               {new Date(blog.createdAt).toLocaleDateString()}
             </p>

@@ -57,17 +57,20 @@ export default function BlogComp({ blog }: BlogCompProps) {
         </Avatar>
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col">
-            <h2 className="font-medium underline underline-offset-2 decoration-gray-500">
-              {userName}
-            </h2>
+            <Link href={`/profile/${blog?.user?.id}`} className="hover:scale-105 duration-300">
+              <h2 className="font-medium underline underline-offset-2 decoration-gray-500">
+                {userName}
+              </h2>
+            </Link>
             <span className="text-xs italic text-gray-600 dark:text-gray-400">
               {timeDisplay}
             </span>
           </div>
-          <div className="hover:text-primary hover:scale-110  duration-300 ">
-            
+          <div className="hover:text-primary hover:scale-110 duration-300">
             <Link href={`/blog/${blog.id}`} className="flex gap-1 items-center">
-            <span className="italic text-sm">{`${Math.ceil(blog.content.length/200)} min read`}</span>
+              <span className="italic text-sm">{`${Math.ceil(
+                blog.content.length / 200
+              )} min read`}</span>
               <ArrowBigRight className="size-5" />
             </Link>
           </div>

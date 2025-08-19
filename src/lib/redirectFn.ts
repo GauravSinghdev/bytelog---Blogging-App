@@ -8,4 +8,5 @@ export default async function redirectFn() {
   if (!session) {
     redirect("/login");
   }
+  return
 }

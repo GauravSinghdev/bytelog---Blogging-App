@@ -2,15 +2,11 @@
 
 import { Loader2 } from "lucide-react";
 import InfiniteScrollContainer from "@/components/shared/InfiniteScrollContainer";
-import BlogComp from "./BlogComp";
-import { useBlogQuery } from "../create-blog/useCreateBlogComp";
-import { BlogSkeleton } from "./BlogSkeleton";
+import { BlogSkeleton } from "../../blogs/BlogSkeleton";
+import { useMyBlogQuery } from "../../create-blog/useCreateBlogComp";
+import BlogComp from "../../blogs/BlogComp";
 
-interface InfiniteBlogScrollProps {
-  query: string; 
-}
-
-export default function InfiniteBlogScroll({ query }: InfiniteBlogScrollProps) {
+export default function InfiniteMyBlogScroll({ userId }: { userId: string }) {
   const {
     data,
     isPending,
@@ -20,14 +16,14 @@ export default function InfiniteBlogScroll({ query }: InfiniteBlogScrollProps) {
     isLoading,
     isFetching,
     isFetchingNextPage,
-  } = useBlogQuery(query);
+  } = useMyBlogQuery(userId);
 
   const blogsArr = data?.pages.flatMap((page) => page.posts) ?? [];
 
   if (isPending) {
     return (
       <div className="grid grid-cols-1 gap-4 px-5 lg:px-0">
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <BlogSkeleton key={i} />
         ))}
       </div>

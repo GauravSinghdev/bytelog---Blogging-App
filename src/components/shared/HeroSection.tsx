@@ -77,20 +77,24 @@ export default function HeroSection() {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg"
-          >
-            Start Writing Today
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="px-8 py-4 text-lg bg-transparent"
-          >
-            View Examples
-          </Button>
+          <Link href={"/create-blog"}>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg"
+            >
+              Start Writing Today
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+          <Link href={"/blogs"}>
+            <Button
+              variant="outline"
+              size="lg"
+              className="px-8 py-4 text-lg bg-transparent"
+            >
+              View Blogs
+            </Button>
+          </Link>
         </motion.div>
 
         {/* Stats */}
@@ -99,15 +103,21 @@ export default function HeroSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">10+</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">
+              10+
+            </div>
             <div className="text-slate-600">Active Bloggers</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">20+</div>
-            <div className="text-slate-600">Articles Published</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">
+              50+
+            </div>
+            <div className="text-slate-600">Blogs Published</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">10M+</div>
+            <div className="text-3xl font-bold text-slate-900 mb-2 dark:text-slate-300">
+              100+
+            </div>
             <div className="text-slate-600">Monthly Readers</div>
           </div>
         </motion.div>

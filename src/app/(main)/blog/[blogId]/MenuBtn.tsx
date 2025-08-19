@@ -1,10 +1,11 @@
 "use client";
 
-import { Copy, EllipsisVertical, Trash } from "lucide-react";
+import { ArrowUpRight, Copy, EllipsisVertical, Trash } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AlertDlt } from "./AlertDlt";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface menuProp {
   blogId: string;
@@ -41,8 +42,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
       </button>
 
       <div
-        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2 text-sm md:text-base  ${session?.data?.user?.id != userId ? "-top-10 right-0": "-top-20 right-0"}
-        transition-opacity duration-500 ${
+        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2 text-sm md:text-base -top-20 right-0 transition-opacity duration-500 ${
           openMenu ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
@@ -53,8 +53,15 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
           Copy <span className="hidden md:inline">Link</span>
           <Copy className="size-4" />
         </button>
-        {session?.data?.user?.id === userId && (
+        {session?.data?.user?.id === userId ? (
           <AlertDlt currentBlogId={currentBlogId} />
+        ) : (
+          <Link href={`/profile/${userId}`}>
+            <button className="w-full hover:bg-transparent cursor-pointer flex items-center justify-center gap-1 py-1 hover:opacity-80 hover:text-primary/90">
+              Visit <span className="hidden md:inline">Profile</span>
+              <ArrowUpRight className="size-4"/>
+            </button>
+          </Link>
         )}
       </div>
     </div>
