@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "../../../public/logo.png"
+import logo from "../../../public/logo.png";
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -14,47 +14,38 @@ export default function Footer() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative bottom-0 left-0 right-0 z-50 max-w-7xl mx-auto py-3"
+        className="relative bottom-0 left-0 right-0 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"
       >
-        <div className="flex flex-col md:flex-row justify-between items-center gap-5 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           {/* Logo & Text */}
-          <div className="flex items-center gap-2">
-            <Image
-              src={logo}
-              alt="logo"
-              width={20}
-              height={20}
-              className="size-6"
-              priority
-            />
-            <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
-              © {new Date().getFullYear()} ByteLog — Created with{" "}
-              <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400" />
-              <Link
-                href={"https://codewithkara.com"}
-                target="_blank"
-                className="underline"
-              >
-                codewithkara
-              </Link>
-            </span>
+          <div className="flex flex-col sm:flex-row items-center gap-2">
+            <div className="flex items-center gap-2">
+              <Image
+                src={logo}
+                alt="logo"
+                width={24}
+                height={24}
+                className="size-6"
+                priority
+              />
+              <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
+                © {new Date().getFullYear()} ByteLog — Created with{" "}
+                <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400 w-4 h-4" />
+              </span>
+            </div>
+            <Link
+              href="https://codewithkara.com"
+              target="_blank"
+              className="underline text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+            >
+              codewithkara
+            </Link>
           </div>
 
-          {/* Links */}
-          {/* <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service", "Contact"].map((item) => (
-              <Link
-                key={item}
-                href="#"
-                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
-              >
-                {item}
-              </Link>
-            ))}
-          </div> */}
-
           {/* Mode Toggle */}
-          <ModeToggle />
+          <div className="flex justify-center md:justify-end">
+            <ModeToggle />
+          </div>
         </div>
       </motion.footer>
     </footer>
