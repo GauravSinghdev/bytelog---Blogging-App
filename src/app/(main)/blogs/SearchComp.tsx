@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
 interface SearchCompProps {
@@ -16,20 +16,25 @@ export default function SearchComp({ query, setQuery }: SearchCompProps) {
   useEffect(() => {
     const handler = setTimeout(() => {
       setQuery(localValue); // update parent state after delay
-    }, 500); // 500ms debounce
+    }, 500);
 
     return () => {
-      clearTimeout(handler); // clear on re-type
+      clearTimeout(handler);
     };
   }, [localValue, setQuery]);
 
   const handleSearch = () => {
-    setQuery(localValue); // force search immediately on click/enter
+    setQuery(localValue);
     console.log("Searching for:", localValue);
   };
 
+  const handleClear = () => {
+    setLocalValue("");
+    setQuery("");
+  };
+
   return (
-    <div className="w-full ml-4 md:w-1/3 relative backdrop-blur-sm">
+    <div className="w-full ml-4 md:ml-0 relative backdrop-blur-sm">
       <Input
         placeholder="search here . . ."
         className="pr-10"
@@ -41,10 +46,10 @@ export default function SearchComp({ query, setQuery }: SearchCompProps) {
       />
       <button
         type="button"
-        onClick={handleSearch}
+        onClick={localValue ? handleClear : handleSearch}
         className="absolute top-1.5 right-2 cursor-pointer"
       >
-        <Search />
+        {localValue ? <X /> : <Search />}
       </button>
     </div>
   );
