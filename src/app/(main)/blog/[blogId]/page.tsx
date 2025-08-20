@@ -5,6 +5,7 @@ import { cache } from "react";
 import { Metadata } from "next";
 import MenuBtn from "./MenuBtn";
 import Link from "next/link";
+import Image from "next/image";
 
 const getBlog = cache(async (blogId: string) => {
   const blog = await getBlogById(blogId);
@@ -58,6 +59,11 @@ export default async function BlogPage(props: unknown) {
             <MenuBtn blogId={blogId} userId={blog?.userId} />
           </div>
           <div className="mt-4">{blog.content}</div>
+          {
+            blog?.imageUrl && (
+              <div className="my-5"><Image src={blog?.imageUrl} width={500} height={500} alt="post-image"/></div>
+            )
+          }
         </div>
       </div>
     </main>

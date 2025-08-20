@@ -13,7 +13,7 @@ const queryKey: QueryKey = ["blog"];
 
 export function useBlogQuery(query: string) {
   return useInfiniteQuery<PostResponse>({
-    queryKey: ["blog", query], // include query in cache key
+    queryKey: ["blog", query],
     queryFn: ({ pageParam }) =>
       fetchData<PostResponse>(
         `/api/posts?${pageParam ? `cursor=${pageParam}&` : ""}q=${encodeURIComponent(query)}`
@@ -37,20 +37,19 @@ export function useMyBlogQuery(userId: string) {
 
 
 export function useCreateBlogComp({ session }: { session: Session | null }) {
-  console.log(session);
-
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (newBlog: { title: string; content: string }) =>
-      postData("/api/posts", newBlog),
+  return useMutation<
+    Post,
+    Error, 
+    { title: string; content: string }, // ✅ what you pass into .mutate
+    { previousData?: InfiniteData<PostResponse, number | undefined> } // ✅ context type
+  >({
+    mutationFn: (newBlog) => postData<Post>("/api/posts", newBlog),
 
-    // Handle optimistic updates
     onMutate: async (newBlogData) => {
-      // Cancel any outgoing refetches to avoid them overwriting our optimistic update
       await queryClient.cancelQueries({ queryKey });
 
-      // Snapshot the previous value for rollback in case of error
       const previousData =
         queryClient.getQueryData<
           InfiniteData<PostResponse, number | undefined>
@@ -68,34 +67,32 @@ export function useCreateBlogComp({ session }: { session: Session | null }) {
         createdAt: new Date().toISOString(),
       };
 
-      // Update the cache with our optimistic comment
       queryClient.setQueryData<InfiniteData<PostResponse, number | undefined>>(
         queryKey,
         (oldData) => {
           const firstPage = oldData?.pages[0];
+          if (!firstPage) return oldData;
 
-          if (firstPage) {
-            return {
-              ...oldData,
-              pages: [
-                {
-                  ...firstPage,
-                  blogs: [optimisticBlog, ...firstPage.posts],
-                },
-                ...oldData.pages.slice(1),
-              ],
-            };
-          }
+          return {
+            ...oldData,
+            pages: [
+              {
+                ...firstPage,
+                posts: [optimisticBlog, ...firstPage.posts], // ✅ fixed "blogs" → "posts"
+              },
+              ...oldData.pages.slice(1),
+            ],
+          };
         }
       );
 
-      // Return the previous data for the onError handler
       return { previousData };
     },
 
-    // If the mutation fails, roll back to the previous state
-    onError(error, variables, context) {
-      queryClient.setQueryData(queryKey, context?.previousData);
+    onError: (error, variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(queryKey, context.previousData);
+      }
     },
   });
 }

@@ -1,0 +1,101 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { IKUpload } from "imagekitio-next";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+
+const authenticator = async () => {
+  try {
+    const response = await fetch("/api/imagekit-auth");
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Request failed with status ${response.status}: ${errorText}`
+      );
+    }
+    return await response.json();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`Authentication request failed: ${error.message}`);
+    }
+    throw new Error("Authentication request failed: Unknown error");
+  }
+};
+
+export default function ImageKitUpload({
+  onUploadSuccess,
+}: {
+  onUploadSuccess?: (url: string) => void;
+}) {
+  const ikUploadRef = useRef<HTMLInputElement | null>(null);
+  const [progressBar, setProgressBar] = useState<number>(0);
+
+  return (
+    <div className="flex flex-col h-24 gap-2">
+      <IKUpload
+        ref={ikUploadRef}
+        folder={`/bytelog-codewithkara`}
+        onSuccess={(res) => {
+          const fileUrl = res.url;
+          toast.success("Image uploaded successfully.");
+          if (onUploadSuccess) onUploadSuccess(fileUrl);
+        }}
+        validateFile={(file) => {
+          if (file.size > 1024 * 1024 * 10) {
+            toast.error("File size should be less than 10MB");
+            return false;
+          }
+          const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif",
+          ];
+          if (!allowedTypes.includes(file.type)) {
+            toast.error("Only JPG, PNG, WebP, or GIF images are allowed.");
+            return false;
+          }
+          return true;
+        }}
+        onUploadProgress={(progress) => {
+          const progressPercent = Math.round(
+            (progress.loaded / progress.total) * 100
+          );
+          setProgressBar(progressPercent);
+
+          if (progressPercent === 100) {
+            setTimeout(() => setProgressBar(0), 1500);
+          }
+        }}
+        urlEndpoint={process.env.NEXT_PUBLIC_URL_ENDPOINT}
+        publicKey={process.env.NEXT_PUBLIC_PUBLIC_KEY}
+        authenticator={authenticator}
+        className="hidden"
+      />
+
+      <Button
+        type="button"   
+        onClick={() => ikUploadRef.current?.click()}
+        variant="outline"
+        className="rounded mt-2 cursor-pointer shadow-xl w-40"
+      >
+        Upload Image
+      </Button>
+
+      <div className="mt-6 h-4 w-[400px] relative">
+        {progressBar > 0 && (
+          <div>
+            <div className="absolute top-0 left-0 bg-gray-300 h-4 w-full rounded-2xl z-[0]" />
+            <div
+              className="absolute top-0 left-0 bg-green-500 h-4 rounded-2xl z-[1] text-center text-xs text-white"
+              style={{ width: `${progressBar}%` }}
+            >
+              {progressBar}%
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

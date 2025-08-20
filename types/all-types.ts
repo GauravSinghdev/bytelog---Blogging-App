@@ -7,10 +7,11 @@ export type Post = {
   };
   title: string;
   content: string;
+  imageUrl?: string | null;
   createdAt: string;
 };
 
 export type PostResponse = {
-  posts: Post[]; 
+  posts: Post[];
   nextCursor?: string | null;
 };

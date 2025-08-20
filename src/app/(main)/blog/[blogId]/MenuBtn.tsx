@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Copy, EllipsisVertical, Trash } from "lucide-react";
+import { ArrowUpRight, Copy, CircleEllipsis } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AlertDlt } from "./AlertDlt";
@@ -38,7 +38,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
   return (
     <div className="relative">
       <button onClick={() => setOpenMenu(!openMenu)} className="cursor-pointer">
-        <EllipsisVertical className="hover:opacity-80 hover:scale-110 duration-300" />
+        <CircleEllipsis className="opacity-80 active:scale-125 duration-300" />
       </button>
 
       <div
@@ -59,7 +59,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
           <Link href={`/profile/${userId}`}>
             <button className="w-full hover:bg-transparent cursor-pointer flex items-center justify-center gap-1 py-1 hover:opacity-80 hover:text-primary/90">
               Visit <span className="hidden md:inline">Profile</span>
-              <ArrowUpRight className="size-4"/>
+              <ArrowUpRight className="size-4" />
             </button>
           </Link>
         )}
