@@ -77,7 +77,7 @@ export default function ImageKitUpload({
         type="button"
         onClick={() => ikUploadRef.current?.click()}
         variant="outline"
-        className="rounded cursor-pointer w-40 font-bold"
+        className="rounded cursor-pointer w-40"
       >
         Upload Image
       </Button>
