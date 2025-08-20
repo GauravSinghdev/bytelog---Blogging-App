@@ -15,7 +15,10 @@ export default function AddBlog() {
   const router = useRouter();
   const { data: session } = useSession();
   const mutation = useCreateBlogComp({ session });
+
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageFileId, setImageFileId] = useState<string>("");
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,8 +40,12 @@ export default function AddBlog() {
       { title, content },
       {
         onSuccess: async (blog) => {
-          if (imageUrl) {
-            await postData("/api/post/add-image", { blogId: blog.id, imageUrl })
+          if (imageUrl && imageFileId) {
+            await postData("/api/post/add-image", {
+              blogId: blog.id,
+              imageUrl,
+              imageFileId,
+            })
               .then(() => toast.success("Blog added successfully!"))
               .catch(() => toast.error("Blog created, but image failed."));
           } else {
@@ -65,12 +72,19 @@ export default function AddBlog() {
         className="h-40 text-3xl"
       />
       <div className="flex flex-col gap-5 md:gap-2">
-        <ImageKitUpload onUploadSuccess={(url) => setImageUrl(url)} />
+        <ImageKitUpload
+          onUploadStart={() => setIsUploading(true)}
+          onUploadEnd={() => setIsUploading(false)}
+          onUploadSuccess={(url, fileId) => {
+            setImageUrl(url);
+            setImageFileId(fileId);
+          }}
+        />
 
         <div className="flex justify-end">
           <Button
             type="submit"
-            disabled={mutation.isPending}
+            disabled={mutation.isPending || isUploading}
             className="md:w-[40%] w-full"
           >
             {mutation.isPending ? "Posting..." : "Post"}

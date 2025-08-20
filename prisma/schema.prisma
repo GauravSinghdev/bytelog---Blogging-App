@@ -27,6 +27,7 @@ model Post {
   title    String
   content  String
   imageUrl String?
+  imageFileId String?
   likes    Int?
 
   createdAt DateTime @default(now())

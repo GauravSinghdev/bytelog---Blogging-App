@@ -1,7 +1,14 @@
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
+import ImageKit from "imagekit";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
+const imagekit = new ImageKit({
+  publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
+  privateKey: process.env.PRIVATE_KEY!,
+  urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
+});
 
 export async function GET(request: Request) {
   try {
@@ -56,16 +63,12 @@ export async function GET(request: Request) {
   }
 }
 
-
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
-      return NextResponse.json(
-        { message: "Not Authorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: "Not Authorized" }, { status: 401 });
     }
 
     const { title, content } = await request.json();
@@ -100,30 +103,41 @@ export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
-      return NextResponse.json(
-        { message: "Not Authorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: "Not Authorized" }, { status: 401 });
     }
 
     const { blogId } = await request.json();
 
-    const delPost = await prisma.post.deleteMany({
-      where: {
-        id: blogId,
-        userId: session.user.id,
-      },
+    // Step 1: Fetch the post first
+    const post = await prisma.post.findUnique({
+      where: { id: blogId },
+      select: { userId: true, imageUrl: true, imageFileId: true },
     });
 
-    if (delPost.count === 0) {
+    if (!post || post.userId !== session.user.id) {
       return NextResponse.json(
         { message: "Post not found or you don't have permission" },
         { status: 404 }
       );
     }
 
+    // Step 3: Delete post from DB
+    const deletedPost = await prisma.post.delete({
+      where: { id: blogId },
+    });
+
+    // Step 2: Delete image from ImageKit if exists
+    if (post.imageFileId) {
+      try {
+        await imagekit.deleteFile(post.imageFileId);
+      } catch (err) {
+        console.error("Failed to delete image from ImageKit:", err);
+        // Not fatal → you can add retry logic here later
+      }
+    }    
+
     return NextResponse.json(
-      { message: "Post deleted successfully", delPost },
+      { message: "Post deleted successfully", deletedPost },
       { status: 200 }
     );
   } catch (error) {
@@ -134,4 +148,3 @@ export async function DELETE(request: Request) {
     );
   }
 }
-

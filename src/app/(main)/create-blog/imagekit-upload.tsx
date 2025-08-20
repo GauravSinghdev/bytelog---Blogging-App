@@ -6,27 +6,24 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const authenticator = async () => {
-  try {
-    const response = await fetch("/api/imagekit-auth");
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Request failed with status ${response.status}: ${errorText}`
-      );
-    }
-    return await response.json();
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(`Authentication request failed: ${error.message}`);
-    }
-    throw new Error("Authentication request failed: Unknown error");
+  const response = await fetch("/api/imagekit-auth");
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `Request failed with status ${response.status}: ${errorText}`
+    );
   }
+  return await response.json();
 };
 
 export default function ImageKitUpload({
   onUploadSuccess,
+  onUploadStart,
+  onUploadEnd,
 }: {
-  onUploadSuccess?: (url: string) => void;
+  onUploadSuccess?: (url: string, fileId: string) => void;
+  onUploadStart?: () => void;
+  onUploadEnd?: () => void;
 }) {
   const ikUploadRef = useRef<HTMLInputElement | null>(null);
   const [progressBar, setProgressBar] = useState<number>(0);
@@ -36,10 +33,17 @@ export default function ImageKitUpload({
       <IKUpload
         ref={ikUploadRef}
         folder={`/bytelog-codewithkara`}
+        onUploadStart={() => {
+          onUploadStart?.();
+        }}
         onSuccess={(res) => {
-          const fileUrl = res.url;
           toast.success("Image uploaded successfully.");
-          if (onUploadSuccess) onUploadSuccess(fileUrl);
+          onUploadSuccess?.(res.url, res.fileId);
+          onUploadEnd?.();
+        }}
+        onError={() => {
+          toast.error("Image upload failed.");
+          onUploadEnd?.();
         }}
         validateFile={(file) => {
           if (file.size > 1024 * 1024 * 10) {
@@ -63,7 +67,6 @@ export default function ImageKitUpload({
             (progress.loaded / progress.total) * 100
           );
           setProgressBar(progressPercent);
-
           if (progressPercent === 100) {
             setTimeout(() => setProgressBar(0), 1500);
           }
@@ -83,13 +86,13 @@ export default function ImageKitUpload({
       </Button>
       <div className="h-2 w-[200px] relative">
         {progressBar > 0 && (
-          <div>
+          <>
             <div className="absolute top-0 left-0 bg-gray-300 h-2 w-full rounded-2xl z-[0]" />
             <div
-              className="absolute top-0 left-0 bg-green-500 h-2 rounded-2xl z-[1] text-center text-xs text-black"
+              className="absolute top-0 left-0 bg-green-500 h-2 rounded-2xl z-[1]"
               style={{ width: `${progressBar}%` }}
             />
-          </div>
+          </>
         )}
       </div>
       {progressBar > 0 && <>{progressBar}%</>}

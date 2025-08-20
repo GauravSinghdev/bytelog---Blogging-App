@@ -3,18 +3,22 @@ import prisma from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const { blogId, imageUrl } = await req.json();
+    const { blogId, imageUrl, imageFileId } = await req.json();
 
-    if (!blogId || !imageUrl) {
+    if (!blogId) {
+      return NextResponse.json({ error: "Blog ID required" }, { status: 400 });
+    }
+
+    if (!imageFileId || !imageUrl) {
       return NextResponse.json(
-        { error: "Blog ID and Image URL are required" },
+        { error: "ImageUrl or ImageFileId required" },
         { status: 400 }
       );
     }
 
     const updatedBlog = await prisma.post.update({
       where: { id: blogId },
-      data: { imageUrl },
+      data: { imageUrl, imageFileId },
     });
 
     return NextResponse.json(updatedBlog, { status: 200 });
