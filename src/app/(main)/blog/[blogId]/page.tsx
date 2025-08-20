@@ -47,7 +47,12 @@ export default async function BlogPage(props: unknown) {
             )}
           </Avatar>
           <div className="divide-y">
-            <Link href={`/profile/${blog?.user?.id}`} className="hover:underline"><p className="font-medium">{userName}</p></Link>
+            <Link
+              href={`/profile/${blog?.user?.id}`}
+              className="hover:underline"
+            >
+              <p className="font-medium">{userName}</p>
+            </Link>
             <p className="text-sm italic">
               {new Date(blog.createdAt).toLocaleDateString()}
             </p>
@@ -58,12 +63,19 @@ export default async function BlogPage(props: unknown) {
             <h1 className="text-3xl font-bold">{blog.title}</h1>
             <MenuBtn blogId={blogId} userId={blog?.userId} />
           </div>
-          <div className="mt-4">{blog.content}</div>
-          {
-            blog?.imageUrl && (
-              <div className="my-5"><Image src={blog?.imageUrl} width={500} height={500} alt="post-image"/></div>
-            )
-          }
+          <div>
+            <div className="mt-4">{blog.content}</div>
+            {blog?.imageUrl && (
+              <div className="my-5">
+                <Image
+                  src={blog?.imageUrl}
+                  width={500}
+                  height={500}
+                  alt="post-image"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </main>
