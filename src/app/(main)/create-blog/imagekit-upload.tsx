@@ -29,7 +29,7 @@ export default function ImageKitUpload({
   onUploadSuccess?: (url: string) => void;
 }) {
   const ikUploadRef = useRef<HTMLInputElement | null>(null);
-  const [progressBar, setProgressBar] = useState<number>(100);
+  const [progressBar, setProgressBar] = useState<number>(0);
 
   return (
     <div className="flex gap-5 items-center">
@@ -73,29 +73,26 @@ export default function ImageKitUpload({
         authenticator={authenticator}
         className="hidden"
       />
-
       <Button
-        type="button"   
+        type="button"
         onClick={() => ikUploadRef.current?.click()}
         variant="outline"
         className="rounded cursor-pointer w-40 font-bold"
       >
         Upload Image
       </Button>
-
-      <div className="h-4 w-[200px] relative">
+      <div className="h-2 w-[200px] relative">
         {progressBar > 0 && (
           <div>
-            <div className="absolute top-0 left-0 bg-gray-300 h-4 w-full rounded-2xl z-[0]" />
+            <div className="absolute top-0 left-0 bg-gray-300 h-2 w-full rounded-2xl z-[0]" />
             <div
-              className="absolute top-0 left-0 bg-green-500 h-4 rounded-2xl z-[1] text-center text-xs text-white"
+              className="absolute top-0 left-0 bg-green-500 h-2 rounded-2xl z-[1] text-center text-xs text-black"
               style={{ width: `${progressBar}%` }}
-            >
-              {progressBar}%
-            </div>
+            />
           </div>
         )}
       </div>
+      {progressBar > 0 && <>{progressBar}%</>}
     </div>
   );
 }
