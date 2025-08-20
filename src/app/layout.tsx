@@ -5,7 +5,6 @@ import Providers from "./provider";
 import { Toaster } from "react-hot-toast";
 import { Comic_Neue } from "next/font/google";
 
-// Define the font without exporting it
 const comicNeue = Comic_Neue({
   variable: "--font-comic-neue",
   subsets: ["latin"],

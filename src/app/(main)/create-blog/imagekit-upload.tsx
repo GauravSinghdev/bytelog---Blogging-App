@@ -29,10 +29,10 @@ export default function ImageKitUpload({
   onUploadSuccess?: (url: string) => void;
 }) {
   const ikUploadRef = useRef<HTMLInputElement | null>(null);
-  const [progressBar, setProgressBar] = useState<number>(0);
+  const [progressBar, setProgressBar] = useState<number>(100);
 
   return (
-    <div className="flex flex-col h-24 gap-2">
+    <div className="flex gap-5 items-center">
       <IKUpload
         ref={ikUploadRef}
         folder={`/bytelog-codewithkara`}
@@ -78,12 +78,12 @@ export default function ImageKitUpload({
         type="button"   
         onClick={() => ikUploadRef.current?.click()}
         variant="outline"
-        className="rounded mt-2 cursor-pointer shadow-xl w-40"
+        className="rounded cursor-pointer w-40 font-bold"
       >
         Upload Image
       </Button>
 
-      <div className="mt-6 h-4 w-[400px] relative">
+      <div className="h-4 w-[200px] relative">
         {progressBar > 0 && (
           <div>
             <div className="absolute top-0 left-0 bg-gray-300 h-4 w-full rounded-2xl z-[0]" />

@@ -44,14 +44,13 @@ export default function AddBlog() {
           } else {
             toast.success("Blog added successfully!");
           }
-    
+
           setTimeout(() => {
             router.push("/blogs");
           }, 100);
         },
       }
     );
-    
   };
 
   return (
@@ -65,12 +64,18 @@ export default function AddBlog() {
         placeholder="Enter content"
         className="h-40 text-3xl"
       />
-      <ImageKitUpload onUploadSuccess={(url) => setImageUrl(url)} />
+      <div className="flex flex-col gap-5 md:gap-2">
+        <ImageKitUpload onUploadSuccess={(url) => setImageUrl(url)} />
 
-      <div className="flex justify-end">
-        <Button type="submit" disabled={mutation.isPending} className="w-[40%]">
-          {mutation.isPending ? "Posting..." : "Post"}
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            disabled={mutation.isPending}
+            className="md:w-[40%] w-full"
+          >
+            {mutation.isPending ? "Posting..." : "Post"}
+          </Button>
+        </div>
       </div>
     </form>
   );
