@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import ImageKitUpload from "./imagekit-upload";
 import { useState } from "react";
 import { postData } from "@/lib/fetch-utils";
-import { X } from "lucide-react"; // icon for close button
+import { X } from "lucide-react"; 
 
 export default function AddBlog() {
   const router = useRouter();
