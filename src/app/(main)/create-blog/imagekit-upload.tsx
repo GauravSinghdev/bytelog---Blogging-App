@@ -20,10 +20,12 @@ export default function ImageKitUpload({
   onUploadSuccess,
   onUploadStart,
   onUploadEnd,
+  disabled = false,
 }: {
-  onUploadSuccess?: (url: string, fileId: string) => void;
+  onUploadSuccess?: (url: string, fileId: string, fileName: string) => void;
   onUploadStart?: () => void;
   onUploadEnd?: () => void;
+  disabled?: boolean;
 }) {
   const ikUploadRef = useRef<HTMLInputElement | null>(null);
   const [progressBar, setProgressBar] = useState<number>(0);
@@ -38,7 +40,7 @@ export default function ImageKitUpload({
         }}
         onSuccess={(res) => {
           toast.success("Image uploaded successfully.");
-          onUploadSuccess?.(res.url, res.fileId);
+          onUploadSuccess?.(res.url, res.fileId, res.name);
           onUploadEnd?.();
         }}
         onError={() => {
@@ -76,14 +78,19 @@ export default function ImageKitUpload({
         authenticator={authenticator}
         className="hidden"
       />
+
+      {/* Upload button */}
       <Button
         type="button"
         onClick={() => ikUploadRef.current?.click()}
         variant="outline"
         className="rounded cursor-pointer w-40"
+        disabled={disabled} // disable when image already uploaded
       >
         Upload Image
       </Button>
+
+      {/* Progress bar */}
       <div className="h-2 w-[200px] relative">
         {progressBar > 0 && (
           <>

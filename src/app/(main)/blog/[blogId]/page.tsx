@@ -72,6 +72,7 @@ export default async function BlogPage(props: unknown) {
                   width={500}
                   height={500}
                   alt="post-image"
+                  priority
                 />
               </div>
             )}

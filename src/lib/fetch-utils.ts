@@ -72,13 +72,3 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
       },
     });
   }
-  
-  export async function addImageToBlog(blogId: string, imageUrl: string) {
-    return prisma.post.update({
-      where: { id: blogId },
-      data: {
-        imageUrl,
-      },
-    });
-  }
-  

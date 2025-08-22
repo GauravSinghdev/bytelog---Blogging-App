@@ -3,7 +3,7 @@ import { z } from "zod";
 export const nameSchema = z
   .string({ message: "Name is required" })
   .min(1,{ message: "Name must be atleast of 1 character" })
-  .max(10, { message: "Name must be at most 10 characters" });
+  .max(20, { message: "Name must be at most 10 characters" });
 
 export const emailSchema = z
   .string({ message: "Email is required" })

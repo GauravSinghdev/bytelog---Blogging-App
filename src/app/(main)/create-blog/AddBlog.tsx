@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import ImageKitUpload from "./imagekit-upload";
 import { useState } from "react";
 import { postData } from "@/lib/fetch-utils";
+import { X } from "lucide-react"; // icon for close button
 
 export default function AddBlog() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function AddBlog() {
 
   const [imageUrl, setImageUrl] = useState<string>("");
   const [imageFileId, setImageFileId] = useState<string>("");
+  const [imageName, setImageName] = useState<string>(""); // store uploaded file name
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,17 +73,55 @@ export default function AddBlog() {
         placeholder="Enter content"
         className="h-40 text-3xl"
       />
-      <div className="flex flex-col gap-5 md:gap-2">
+      <div className="flex flex-col">
         <ImageKitUpload
+          disabled={!!imageUrl}
           onUploadStart={() => setIsUploading(true)}
           onUploadEnd={() => setIsUploading(false)}
-          onUploadSuccess={(url, fileId) => {
+          onUploadSuccess={(url, fileId, fileName) => {
             setImageUrl(url);
             setImageFileId(fileId);
+            setImageName(fileName);
           }}
         />
 
-        <div className="flex justify-end">
+        {/* Show uploaded image name + close btn */}
+        {imageUrl && (
+          <div className="flex items-center gap-3">
+            <span className="truncate max-w-[200px] text-sm">{imageName}</span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="border"
+              onClick={async () => {
+                try {
+                  const res = await fetch("api/delete-image", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ fileId: imageFileId }),
+                  });
+
+                  if (!res.ok) {
+                    toast.error("Failed to delete image.");
+                    return;
+                  }
+
+                  toast.success("Image deleted.");
+                  setImageUrl("");
+                  setImageFileId("");
+                  setImageName("");
+                } catch (err) {
+                  toast.error("Something went wrong while deleting.");
+                }
+              }}
+            >
+              <X className="w-4 h-4 text-red-500" />
+            </Button>
+          </div>
+        )}
+
+        <div className="flex justify-end mt-1">
           <Button
             type="submit"
             disabled={mutation.isPending || isUploading}
