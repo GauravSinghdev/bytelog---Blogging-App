@@ -4,7 +4,7 @@ import ImageKit from "imagekit";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export const imagekit = new ImageKit({
+const imagekit = new ImageKit({
   publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
   privateKey: process.env.PRIVATE_KEY!,
   urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
