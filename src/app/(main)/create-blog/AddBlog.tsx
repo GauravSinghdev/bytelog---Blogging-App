@@ -19,7 +19,7 @@ export default function AddBlog() {
 
   const [imageUrl, setImageUrl] = useState<string>("");
   const [imageFileId, setImageFileId] = useState<string>("");
-  const [imageName, setImageName] = useState<string>(""); // store uploaded file name
+  const [imageName, setImageName] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -112,6 +112,7 @@ export default function AddBlog() {
                   setImageFileId("");
                   setImageName("");
                 } catch (err) {
+                  console.error(err);
                   toast.error("Something went wrong while deleting.");
                 }
               }}

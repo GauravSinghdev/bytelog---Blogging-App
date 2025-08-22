@@ -1,7 +1,5 @@
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { imagekit } from "../posts/route";
-
-
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,10 +7,14 @@ export async function POST(req: NextRequest) {
 
     await imagekit.deleteFile(fileId);
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (error: any) {
-    return new Response(
-      JSON.stringify({ error: "Server error", details: error.message }),
+    return NextResponse.json(
+      { message: "Deleted post successfully." },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: "Failed to delete post" },
       { status: 500 }
     );
   }
