@@ -8,6 +8,7 @@ import {
 } from "date-fns";
 import { Post } from "../../../../types/all-types";
 import { ArrowBigRight } from "lucide-react";
+import Image from "next/image";
 
 interface BlogCompProps {
   blog: Post;
@@ -57,7 +58,10 @@ export default function BlogComp({ blog }: BlogCompProps) {
         </Avatar>
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col">
-            <Link href={`/profile/${blog?.user?.id}`} className="hover:scale-105 duration-300">
+            <Link
+              href={`/profile/${blog?.user?.id}`}
+              className="hover:scale-105 duration-300"
+            >
               <h2 className="font-medium underline underline-offset-2 decoration-gray-500">
                 {userName}
               </h2>
@@ -77,9 +81,16 @@ export default function BlogComp({ blog }: BlogCompProps) {
         </div>
       </div>
 
-      <div className="flex flex-col w-full">
-        <h1 className="text-2xl font-semibold line-clamp-2 opacity-80">{blog.title}</h1>
-        <p className="text-lg line-clamp-2 opacity-80">{blog.content}</p>
+      <div className="flex md:gap-5">
+        <div className="flex flex-col w-full">
+          <h1 className="text-lg md:text-2xl font-semibold line-clamp-2 opacity-80">
+            {blog.title}
+          </h1>
+          <p className="text-base md:text-xl line-clamp-2 opacity-80">{blog.content}</p>
+        </div>
+        {
+          blog?.imageUrl && <Image src={blog?.imageUrl} alt="post-image" width={150} height={100} className="size-20 md:size-30 object-cover" priority />
+        }
       </div>
     </div>
   );
