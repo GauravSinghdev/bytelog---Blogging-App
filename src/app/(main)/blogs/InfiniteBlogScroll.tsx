@@ -26,8 +26,8 @@ export default function InfiniteBlogScroll({ query }: InfiniteBlogScrollProps) {
 
   if (isPending) {
     return (
-      <div className="grid grid-cols-1 gap-4 px-5 lg:px-0">
-        {Array.from({ length: 5 }).map((_, i) => (
+      <div className="grid lg:grid-cols-2 gap-4 px-5 lg:px-0">
+        {Array.from({ length: 10 }).map((_, i) => (
           <BlogSkeleton key={i} />
         ))}
       </div>
@@ -45,7 +45,7 @@ export default function InfiniteBlogScroll({ query }: InfiniteBlogScrollProps) {
       {blogsArr.length > 0 && (
         <InfiniteScrollContainer
           onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
-          className="masonry px-5 lg:px-0"
+          className="grid lg:grid-cols-2 gap-2 px-5 lg:px-0"
         >
           {blogsArr.map((blog) => (
             <BlogComp key={blog.id} blog={blog} />

@@ -10,7 +10,7 @@ export default function AllBlogPage() {
   const [query, setQuery] = useState("");
 
   return (
-    <main className="max-w-5xl mx-auto flex flex-col gap-5 min-h-screen">
+    <main className="max-w-6xl mx-auto flex flex-col gap-5 min-h-screen">
       <div className="flex items-center justify-end mt-10 mx-1 gap-2">
         <SearchComp query={query} setQuery={setQuery} />
         <Link href={"/create-blog"}>

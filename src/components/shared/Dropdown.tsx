@@ -26,7 +26,7 @@ export function DropdownMenuCheckboxes({ name, avatarUrl, id }: NameProp) {
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer border-2">
           <AvatarImage src={avatarUrl} alt={name.split(" ")[0]} />
-          <AvatarFallback>
+          <AvatarFallback className="text-purple-400 font-bold tracking-widest">
             {name.split(" ")[0][0] + name.split(" ")[0][1]}
           </AvatarFallback>
         </Avatar>

@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           {/* Logo & Text */}
           <div className="flex flex-col sm:flex-row items-center gap-2">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-2">
               <Image
                 src={logo}
                 alt="logo"
@@ -40,11 +40,6 @@ export default function Footer() {
             >
               codewithkara
             </Link>
-          </div>
-
-          {/* Mode Toggle */}
-          <div className="flex justify-center md:justify-end">
-            <ModeToggle />
           </div>
         </div>
       </motion.footer>

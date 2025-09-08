@@ -20,7 +20,7 @@ export default function SearchComp({ query, setQuery }: SearchCompProps) {
 
     return () => {
       clearTimeout(handler);
-    };
+  };
   }, [localValue, setQuery]);
 
   const handleSearch = () => {
@@ -34,7 +34,7 @@ export default function SearchComp({ query, setQuery }: SearchCompProps) {
   };
 
   return (
-    <div className="w-full ml-4 md:ml-0 relative backdrop-blur-sm">
+    <div className="w-full lg:w-2/5 ml-4 md:ml-0 relative backdrop-blur-sm">
       <Input
         placeholder="search here . . ."
         className="pr-10"
