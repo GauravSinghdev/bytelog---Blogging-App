@@ -42,7 +42,7 @@ export default function MenuBtn({ blogId, userId }: menuProp) {
       </button>
 
       <div
-        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2 text-sm md:text-base -top-20 right-0 transition-opacity duration-500 ${
+        className={`absolute border w-40 py-1 shadow rounded-md divide-y-2 text-sm md:text-base -top-20 right-0 transition-opacity duration-500 bg-background z-50 ${
           openMenu ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >

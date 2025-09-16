@@ -81,7 +81,7 @@ export default function BlogComp({ blog }: BlogCompProps) {
         </div>
       </div>
 
-      <div className="flex md:gap-5">
+      <Link href={`/blog/${blog.id}`} className="flex md:gap-5">
         <div className="flex flex-col w-full">
           <h1 className="text-lg md:text-xl font-semibold line-clamp-2 opacity-80">
             {blog.title}
@@ -91,7 +91,7 @@ export default function BlogComp({ blog }: BlogCompProps) {
         {
           blog?.imageUrl && <Image src={blog?.imageUrl} alt="post-image" width={150} height={100} className="size-20 md:size-30 object-cover rounded" priority />
         }
-      </div>
+      </Link>
     </div>
   );
 }
