@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import InfiniteBlogScroll from "./InfiniteBlogScroll";
 import SearchComp from "./SearchComp";
+import PaginationBlog from "./PaginationBlog";
 
 export default function AllBlogPage() {
   const [query, setQuery] = useState("");
@@ -19,7 +19,8 @@ export default function AllBlogPage() {
           </Button>
         </Link>
       </div>
-      <InfiniteBlogScroll query={query} />
+      {/* <InfiniteBlogScroll query={query} /> */}
+      <PaginationBlog query={query} />
     </main>
   );
 }

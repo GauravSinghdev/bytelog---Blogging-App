@@ -1,9 +1,17 @@
-import { fetchData, fetchMyData, postData } from "@/lib/fetch-utils";
+import {
+  fetchBlogsPagin,
+  fetchData,
+  fetchMyData,
+  fetchMyDataPagin,
+  postData,
+} from "@/lib/fetch-utils";
 import {
   InfiniteData,
+  keepPreviousData,
   QueryKey,
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { Post, PostResponse } from "../../../../types/all-types";
@@ -16,10 +24,28 @@ export function useBlogQuery(query: string) {
     queryKey: ["blog", query],
     queryFn: ({ pageParam }) =>
       fetchData<PostResponse>(
-        `/api/posts?${pageParam ? `cursor=${pageParam}&` : ""}q=${encodeURIComponent(query)}`
+        `/api/posts?${
+          pageParam ? `cursor=${pageParam}&` : ""
+        }q=${encodeURIComponent(query)}`
       ),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+}
+
+export function usePaginBlogQuery(query: string, page: number) {
+  return useQuery({
+    queryKey: ["blogs", page, query],
+    queryFn: () => fetchBlogsPagin(page, query),
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function usePaginMyBlogQuery(userId: string, page: number) {
+  return useQuery({
+    queryKey: ["myblog", page, userId],
+    queryFn: () => fetchMyDataPagin(page, userId),
+    placeholderData: keepPreviousData,
   });
 }
 
@@ -28,20 +54,21 @@ export function useMyBlogQuery(userId: string) {
     queryKey: ["myblog", userId],
     queryFn: ({ pageParam }) =>
       fetchMyData<PostResponse>(
-        `/api/my-posts?userId=${userId}${pageParam ? `&cursor=${pageParam}` : ""}`
+        `/api/my-posts?userId=${userId}${
+          pageParam ? `&cursor=${pageParam}` : ""
+        }`
       ),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 }
 
-
 export function useCreateBlogComp({ session }: { session: Session | null }) {
   const queryClient = useQueryClient();
 
   return useMutation<
     Post,
-    Error, 
+    Error,
     { title: string; content: string }, // ✅ what you pass into .mutate
     { previousData?: InfiniteData<PostResponse, number | undefined> } // ✅ context type
   >({

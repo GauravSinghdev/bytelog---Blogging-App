@@ -5,6 +5,7 @@ import { getProfileById } from "@/lib/fetch-utils";
 import redirectFn from "@/lib/redirectFn";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
+import PaginationBlog from "./PaginationMyBlog";
 
 const getProfile = cache(async (id: string) => {
   const blog = await getProfileById(id);
@@ -78,7 +79,8 @@ export default async function ProfilePage(props: unknown) {
       <h1 className="text-xl font-bold text-center">
         Blogs by <span className="text-2xl text-primary">{profile?.name}</span>
       </h1>
-      <InfiniteMyBlogScroll userId={id} />
+      {/* <InfiniteMyBlogScroll userId={id} /> */}
+      <PaginationBlog userId={id} />
     </main>
   );
 }
