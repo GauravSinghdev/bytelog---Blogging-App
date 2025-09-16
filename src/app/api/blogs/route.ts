@@ -1,6 +1,6 @@
-// /app/api/blogs/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { Prisma } from "../../../../generated/prisma";
 
 export async function GET(request: Request) {
   try {
@@ -10,10 +10,9 @@ export async function GET(request: Request) {
     const q = searchParams.get("q") || "";
     const pageSize = 10;
 
-    // Build search conditions
     const searchWords = q.split(" ").filter(Boolean);
 
-    const whereCondition: Record<string, any> =
+    const whereCondition: Prisma.PostWhereInput =
       searchWords.length > 0
         ? {
             AND: searchWords.map((word) => ({
@@ -25,12 +24,10 @@ export async function GET(request: Request) {
           }
         : {};
 
-    // Count total posts
     const totalCount = await prisma.post.count({
       where: whereCondition,
     });
 
-    // Fetch paginated posts
     const posts = await prisma.post.findMany({
       where: whereCondition,
       include: {
@@ -49,7 +46,6 @@ export async function GET(request: Request) {
       },
     });
 
-    // Response type
     return NextResponse.json({
       posts,
       hasMore: (page + 1) * pageSize < totalCount,

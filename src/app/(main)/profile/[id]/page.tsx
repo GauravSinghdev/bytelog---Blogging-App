@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import React, { cache } from "react";
-import InfiniteMyBlogScroll from "./InfiniteMyBlogScroll";
 import { getProfileById } from "@/lib/fetch-utils";
 import redirectFn from "@/lib/redirectFn";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";

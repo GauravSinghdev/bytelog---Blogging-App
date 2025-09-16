@@ -25,10 +25,6 @@ export default function Appbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleClick = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}

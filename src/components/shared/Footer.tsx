@@ -4,7 +4,6 @@ import logo from "../../../public/logo.png";
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 
 export default function Footer() {
