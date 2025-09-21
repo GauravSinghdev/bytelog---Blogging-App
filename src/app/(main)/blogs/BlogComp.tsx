@@ -47,7 +47,7 @@ export default function BlogComp({ blog }: BlogCompProps) {
   })();
 
   return (
-    <div className="col-span-1 border w-full rounded p-2 flex flex-col gap-3 backdrop-blur-sm">
+    <div className="col-span-1 border w-full rounded p-5 flex flex-col gap-3 backdrop-blur-sm">
       <div className="flex items-start gap-3 w-full py-1 border-b shadow-xs">
         <Avatar className="cursor-pointer border-2 w-10 h-10">
           {avatarUrl ? (
@@ -81,12 +81,12 @@ export default function BlogComp({ blog }: BlogCompProps) {
         </div>
       </div>
 
-      <Link href={`/blog/${blog.id}`} className="flex md:gap-5">
+      <Link href={`/blog/${blog.id}`} className="flex md:gap-5 text-balance">
         <div className="flex flex-col w-full">
           <h1 className="text-lg md:text-xl font-semibold line-clamp-2 opacity-80">
             {blog.title}
           </h1>
-          <p className="text-base md:text-lg line-clamp-2 opacity-80">{blog.content}</p>
+          <p className="text-sm md:text-base line-clamp-2 opacity-80">{blog.content}</p>
         </div>
         {
           blog?.imageUrl && <Image src={blog?.imageUrl} alt="post-image" width={150} height={100} className="size-20 md:size-30 object-cover rounded" priority />

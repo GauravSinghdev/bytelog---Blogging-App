@@ -6,28 +6,31 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const page = parseInt(searchParams.get("page") || "0", 10);
-    const q = searchParams.get("q") || "";
+    // Pagination (1-based index)
+    const page = parseInt(searchParams.get("page") || "1", 10);
     const pageSize = 10;
+    const skip = (page - 1) * pageSize;
 
-    const searchWords = q.split(" ").filter(Boolean);
+    // Search query
+    const q = (searchParams.get("q") || "").trim();
+
+    // Multi-word search (matches ANY word in title/content)
+    const searchWords = q.split(/\s+/).filter(Boolean);
 
     const whereCondition: Prisma.PostWhereInput =
       searchWords.length > 0
         ? {
-            AND: searchWords.map((word) => ({
-              OR: [
-                { title: { contains: word, mode: "insensitive" } },
-                { content: { contains: word, mode: "insensitive" } },
-              ],
-            })),
+            OR: searchWords.flatMap((word) => [
+              { title: { contains: word, mode: "insensitive" } },
+              { content: { contains: word, mode: "insensitive" } },
+            ]),
           }
         : {};
 
-    const totalCount = await prisma.post.count({
-      where: whereCondition,
-    });
+    // Count total for pagination
+    const totalCount = await prisma.post.count({ where: whereCondition });
 
+    // Fetch posts
     const posts = await prisma.post.findMany({
       where: whereCondition,
       include: {
@@ -39,7 +42,7 @@ export async function GET(request: Request) {
           },
         },
       },
-      skip: page * pageSize,
+      skip,
       take: pageSize,
       orderBy: {
         createdAt: "desc",
@@ -48,7 +51,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       posts,
-      hasMore: (page + 1) * pageSize < totalCount,
+      hasMore: page * pageSize < totalCount,
       totalCount,
     } satisfies {
       posts: typeof posts;
