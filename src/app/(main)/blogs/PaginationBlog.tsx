@@ -35,7 +35,7 @@ export default function PaginationBlog({ query }: PaginationBlogProps) {
 
   // Pagination logic
   const getPaginationNumbers = () => {
-    let pages: (number | string)[] = [];
+    const pages: (number | string)[] = [];
 
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
