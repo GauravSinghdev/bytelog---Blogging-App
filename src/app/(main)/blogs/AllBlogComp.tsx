@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PaginationBlog from "./PaginationBlog";
 import { useSearchParams, useRouter } from "next/navigation";
+import FloatAdd from "./FloatAdd";
 
 export default function AllBlogComp() {
   const searchParams = useSearchParams();
@@ -17,21 +18,29 @@ export default function AllBlogComp() {
 
   // Sync query change with URL
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    // Keep current page if exists, otherwise default 1
-    const currentPage = searchParams.get("page") || "1";
-    params.set("page", currentPage);
+    const params = new URLSearchParams(window.location.search);
+
+    if (query) {
+      params.set("q", query);
+      params.set("page", "1"); // reset to page 1 on new search
+    } else {
+      params.delete("q");
+      if (!params.get("page")) {
+        params.set("page", "1");
+      }
+    }
+
     router.replace(`?${params.toString()}`);
-  }, [query, router, searchParams]);
+  }, [query, router]);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex relative flex-col gap-5">
+      <FloatAdd />
       <div className="flex items-center justify-end mt-10 mx-1 gap-2">
         <SearchComp query={query} setQuery={setQuery} />
-        <Link href={"/create-blog"}>
+        <Link href="/create-blog" className="hidden md:inline">
           <Button className="w-fit mr-3 md:mr-0 font-semibold">
-            Create <span className="hidden md:inline">new Blog</span>
+            Create new Blog
           </Button>
         </Link>
       </div>

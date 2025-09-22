@@ -5,6 +5,9 @@ import redirectFn from "@/lib/redirectFn";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
 import PaginationBlog from "./PaginationMyBlog";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { EditingComp } from "./EditingComp";
 
 const getProfile = cache(async (id: string) => {
   const blog = await getProfileById(id);
@@ -27,6 +30,8 @@ export default async function ProfilePage(props: unknown) {
   await redirectFn();
   const { id } = await (props as { params: { id: string } }).params;
   const profile = await getProfile(id);
+
+  const currentUser = await getServerSession(authOptions)
 
   const userName = profile?.name ?? "Unknown";
   const avatarUrl = profile?.avatarUrl ?? undefined;
@@ -59,20 +64,9 @@ export default async function ProfilePage(props: unknown) {
             <span className="font-normal">{profile._count.posts}</span>
           </h3>
         </div>
-        {/* <div className="absolute right-2 top-2">
-          <Button
-            variant={"outline"}
-            className="border text-primary font-semibold hidden md:flex items-center"
-          >
-            Edit
-            <Pencil className="size-5"/>
-          </Button>
-        </div>
-        <div className="absolute right-2 top-2">
-          <button className="text-primary font-semibold block md:hidden">
-            <Pencil size={20} />
-          </button>
-        </div> */}
+        {currentUser && currentUser.user.id === id  && (
+          <EditingComp/>
+        )}
       </div>
 
       <h1 className="text-xl font-bold text-center">
