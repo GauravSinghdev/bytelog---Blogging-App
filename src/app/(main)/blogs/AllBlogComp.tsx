@@ -5,15 +5,10 @@ import SearchComp from "./SearchComp";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PaginationBlog from "./PaginationBlog";
-import { useSearchParams, useRouter } from "next/navigation";
 import FloatAdd from "./FloatAdd";
 
 export default function AllBlogComp() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const initialQuery = searchParams.get("q") || "";
-  const [query, setQuery] = useState(initialQuery);
+  const [query, setQuery] = useState<string>("");
 
   return (
     <div className="flex relative flex-col gap-5">
