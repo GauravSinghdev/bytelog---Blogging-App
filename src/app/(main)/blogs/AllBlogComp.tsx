@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchComp from "./SearchComp";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -12,26 +12,8 @@ export default function AllBlogComp() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Initialize query from URL
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
-
-  // Sync query change with URL
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (query) {
-      params.set("q", query);
-      params.set("page", "1"); // reset to page 1 on new search
-    } else {
-      params.delete("q");
-      if (!params.get("page")) {
-        params.set("page", "1");
-      }
-    }
-
-    router.replace(`?${params.toString()}`);
-  }, [query, router]);
 
   return (
     <div className="flex relative flex-col gap-5">
