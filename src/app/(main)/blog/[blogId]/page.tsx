@@ -38,33 +38,34 @@ export default async function BlogPage(props: unknown) {
   return (
     <main className="max-w-6xl mx-auto flex flex-col gap-5 min-h-screen items-center mt-10 p-1 md:p-0">
       <div className="flex flex-col w-full gap-5 p-3 md:p-5 backdrop-blur-sm border rounded">
-        <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
-          <Avatar className="w-10 h-10 border-2">
-            {avatarUrl ? (
-              <AvatarImage src={avatarUrl} alt={userName} />
-            ) : (
-              <AvatarFallback>{initials}</AvatarFallback>
-            )}
-          </Avatar>
-          <div className="divide-y">
-            <Link
-              href={`/profile/${blog?.user?.id}`}
-              className="hover:underline"
-            >
-              <p className="font-medium">{userName}</p>
-            </Link>
-            <p className="text-sm italic">
-              {new Date(blog.createdAt).toLocaleDateString()}
-            </p>
-          </div>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl md:text-5xl font-bold">{blog.title}</h1>
+          <MenuBtn blogId={blogId} userId={blog?.userId} />
         </div>
+
         <div className="divide-y-2 ">
-          <div className="flex justify-between">
-            <h1 className="text-3xl font-bold">{blog.title}</h1>
-            <MenuBtn blogId={blogId} userId={blog?.userId} />
+          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300 py-5">
+            <Avatar className="w-10 h-10 border-2">
+              {avatarUrl ? (
+                <AvatarImage src={avatarUrl} alt={userName} />
+              ) : (
+                <AvatarFallback>{initials}</AvatarFallback>
+              )}
+            </Avatar>
+            <div className="divide-y">
+              <Link
+                href={`/profile/${blog?.user?.id}`}
+                className="hover:underline"
+              >
+                <p className="font-medium">{userName}</p>
+              </Link>
+              <p className="text-sm italic">
+                {new Date(blog.createdAt).toLocaleDateString()}
+              </p>
+            </div>
           </div>
           <div>
-            <div className="mt-4">{blog.content}</div>
+            <div className="mt-4 md:text-xl">{blog.content}</div>
             {blog?.imageUrl && (
               <div className="my-5">
                 <Image
