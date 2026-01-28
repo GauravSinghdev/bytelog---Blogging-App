@@ -70,13 +70,10 @@ export default function BlogComp({ blog }: BlogCompProps) {
               {timeDisplay}
             </span>
           </div>
-          <div className="hover:text-primary hover:scale-110 duration-300">
-            <Link href={`/blog/${blog.id}`} className="flex gap-1 items-center">
-              <span className="italic text-sm">{`${Math.ceil(
+          <div className="italic text-sm">
+              {`${Math.ceil(
                 blog.content.length / 200
-              )} min read`}</span>
-              <ArrowBigRight className="size-5" />
-            </Link>
+              )} min read`}
           </div>
         </div>
       </div>

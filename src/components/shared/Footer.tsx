@@ -15,7 +15,7 @@ export default function Footer() {
         transition={{ duration: 0.6 }}
         className="relative bottom-0 left-0 right-0 z-50 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4"
       >
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-center md:text-left">
           {/* Logo & Text */}
           <div className="flex flex-col sm:flex-row items-center gap-2">
             <div className="flex flex-col md:flex-row items-center gap-2">
@@ -27,7 +27,7 @@ export default function Footer() {
                 className="size-6"
                 priority
               />
-              <span className="font-semibold text-slate-700 dark:text-slate-300 flex gap-1 items-center">
+              <span className="text-slate-700 dark:text-slate-300 flex gap-1 items-center">
                 © {new Date().getFullYear()} ByteLog — Created with{" "}
                 <Heart className="text-red-500 dark:text-red-400 fill-red-500 dark:fill-red-400 w-4 h-4" />
               </span>
@@ -35,9 +35,9 @@ export default function Footer() {
             <Link
               href="https://codewithkara.com"
               target="_blank"
-              className="underline text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="underline text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-extrabold"
             >
-              codewithkara
+              kara
             </Link>
           </div>
         </div>
